@@ -1,0 +1,15 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+      "react/no-unescaped-entities": "off",
+      "@next/next/no-page-custom-font": "off",
+      "@next/next/no-img-element": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "indent": ["error", 4],
+      "object-curly-spacing": ["error", "always"],
+      "brace-style": ["error", "allman", { "allowSingleLine": true }]
+  },
+  "env": {
+      "browser": true
+  }
+}

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "SET PORT=8080 && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -27,8 +27,8 @@
     "@types/styled-components": "^5.1.26",
     "babel-plugin-import": "^1.13.5",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "8.27.0",
-    "eslint-config-next": "13.0.3",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5",
     "next-compose-plugins": "^2.2.1",
     "next-plugin-antd-less": "^1.8.0"
   }

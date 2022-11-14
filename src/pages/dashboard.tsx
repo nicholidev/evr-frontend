@@ -5,18 +5,20 @@ import { NextPage } from "next";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useEffect, useState } from "react";
-import { minersApi, workersApi } from "api";
+import { minersApi, validBlocksApi, workersApi } from "api";
 import { hashRateFormat } from "utils/unit.helper";
 
 
 const { Search } = Input
 
-const DashboardPage: NextPage = () => {
+const DashboardPage: NextPage = () => 
+{
     const [current, setCurrent] = useState<any>("shared");
     const [miner, setMiner] = useState<any>({});
     const [workers, setWorkers] = useState<any[]>([]);
     const [solos, setSolos] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
+    const [pool, setPool] = useState<any>({});
 
     const chartOptions = {
         title: {
@@ -37,7 +39,8 @@ const DashboardPage: NextPage = () => {
             title: "Worker Hashrate",
             align: "right",
             sorter: (a: any, b: any) => b.hashrate?.shared - a.hashrate?.shared,
-            render: (i: any) => {
+            render: (i: any) =>
+            {
                 return (
                     <span>
                         {
@@ -68,13 +71,17 @@ const DashboardPage: NextPage = () => {
     ];
 
 
-    const loadSharedData = async (w: string) => {
+    const loadSharedData = async (w: string) => 
+    {
         return minersApi(w)
-            .then(({ data }) => {
+            .then(({ data }) => 
+            {
                 console.log(data?.body?.primary?.workers?.shared?.length)
-                if (data?.body?.primary?.workers?.shared?.length > 0) {
+                if (data?.body?.primary?.workers?.shared?.length > 0) 
+                {
                     return Promise.all(
-                        data?.body?.primary?.workers?.shared?.map(async (m: any, index: number) => {
+                        data?.body?.primary?.workers?.shared?.map(async (m: any, index: number) => 
+                        {
                             const w = await workersApi(m);
                             return {
                                 index: index + 1,
@@ -84,21 +91,27 @@ const DashboardPage: NextPage = () => {
                             }
                         })
                     )
-                } else {
+                }
+                else 
+                {
                     return []
                 }
             })
             .catch(e => console.log(e))
     }
 
-    const loadSoloData = async (w: string) => {
+    const loadSoloData = async (w: string) => 
+    {
         return minersApi(w)
-            .then(({ data }) => {
+            .then(({ data }) => 
+            {
                 setMiner(data?.body?.primary)
                 console.log(data?.body?.primary?.workers?.solo?.length)
-                if (data?.body?.primary?.workers?.solo?.length > 0) {
+                if (data?.body?.primary?.workers?.solo?.length > 0) 
+                {
                     return Promise.all(
-                        data?.body?.primary?.workers?.solo?.map(async (m: any, index: number) => {
+                        data?.body?.primary?.workers?.solo?.map(async (m: any, index: number) => 
+                        {
                             const w = await workersApi(m);
                             return {
                                 index: index + 1,
@@ -108,38 +121,52 @@ const DashboardPage: NextPage = () => {
                             }
                         })
                     )
-                } else {
+                }
+                else 
+                {
                     return []
                 }
             })
             .catch(e => console.log(e))
     }
 
-    const onSearch = (e: string) => {
+    const onSearch = (e: string) => 
+    {
         setLoading(true);
         loadSharedData(e)
-            .then((res: any) => {
+            .then((res: any) => 
+            {
                 setWorkers(res.sort((a: any, b: any) => b.hashrate?.shared - a.hashrate?.shared))
             })
-            .catch(e => {
+            .catch(e => 
+            {
                 console.log(e)
             })
             .finally(() => setLoading(false))
 
         loadSoloData(e)
-            .then((res: any) => {
+            .then((res: any) => 
+            {
                 setSolos(res.sort((a: any, b: any) => b.hashrate?.solo - a.hashrate?.solo))
             })
-            .catch(e => {
+            .catch(e => 
+            {
                 console.log(e)
             })
             .finally(() => setLoading(false))
     }
 
+    useEffect(() => 
+    {
+        validBlocksApi()
+            .then(({ data }) => 
+            {
+                setPool(data?.body?.primary);
+            })
+    }, [])
 
-    console.log(solos)
-    console.log(workers)
-    console.log(miner)
+    console.log(pool?.shares?.valid)
+    console.log(miner?.shares?.[current]?.valid || 0)
 
     return (
         <MainLayout>
@@ -216,7 +243,7 @@ const DashboardPage: NextPage = () => {
                             />
                         </Card>
                     </Col>
-                    <Col span={8}>
+                    <Col span={current !== 'solo' ? 8 : 12}>
                         <Card>
                             <Statistic
                                 title="Pending"
@@ -228,7 +255,7 @@ const DashboardPage: NextPage = () => {
                             />
                         </Card>
                     </Col>
-                    <Col span={8}>
+                    <Col span={current !== 'solo' ? 8 : 12}>
                         <Card>
                             <Statistic
                                 title="Paid"
@@ -240,18 +267,24 @@ const DashboardPage: NextPage = () => {
                             />
                         </Card>
                     </Col>
-                    <Col span={8}>
-                        <Card>
-                            <Statistic
-                                title="Estimated Earnings"
-                                value={"coming"}
-                                precision={0}
-                                valueStyle={{ color: '#3f8600' }}
-                                // prefix={<ArrowUpOutlined />}
-                                suffix="%"
-                            />
-                        </Card>
-                    </Col>
+                    {
+                        current !== 'solo' && (
+                            <Col span={8}>
+                                <Card>
+                                    <Statistic
+                                        title="Estimated Earnings"
+                                        value={
+                                            (((((miner?.shares?.[current]?.valid || 0) * 100) / (pool?.shares?.valid || 0)) / 100) * (2500))
+                                        }
+                                        precision={2}
+                                        valueStyle={{ color: '#3f8600' }}
+                                        // prefix={<ArrowUpOutlined />}
+                                        suffix="EVR"
+                                    />
+                                </Card>
+                            </Col>
+                        )
+                    }
 
                     <Col span={24}>
                         <Card>

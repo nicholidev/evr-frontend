@@ -1,29 +1,76 @@
-import { Button, Card, Col, Row, Space } from 'antd'
+import { Button, Card, Col, Divider, Row, Space, Statistic, Switch } from 'antd'
 import Head from 'next/head'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
 import MainLayout from 'layouts'
 import Container from 'components/container'
+import { useEffect, useState } from 'react'
+import { historicalApi, statisticApi } from "../api";
+import { hashRateFormat } from 'utils/unit.helper'
+import { getTimeMinutes } from "../utils/time.helper";
 
 
 export default function Home() 
 {
+    const [statistic, setStatistic] = useState<any>({})
+    const [history, setHistory] = useState<any[]>([])
+
 
     const chartOptions = {
         chart: {
             height: 500,
+            type: 'area'
         },
         title: {
             text: 'Pool Hashrate'
         },
         xAxis: {
-            gridLineWidth: 1,
-            categories: ['10.12', '10.12', '10.12', '10.12', '10.12', '10.12', '10.12'],
+            categories: history.map((i) => getTimeMinutes(i.time)),
         },
-        series: [{
-            data: [12, 223, 234, 1234,232, 234,123,343]
-        }]
+        yAxis: {
+            title: {
+                text: ''
+            },
+            labels: {
+                formatter: function ()
+                {
+                    return this.value  + 'GH/s';
+                }
+            }
+        },
+        allowDecimals: false,
+        accessibility: {
+            rangeDescription: 'Range: 1940 to 2017.'
+        },
+
+        plotOptions: {
+            area: {
+                marker: {
+                    enabled: true,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+
+        series: [
+            {
+                name: 'Shared',
+                data: history.map((i) => i.hashrate.shared / 1000000000),
+                color: '#4eb000',
+            },
+            {
+                name: 'Solo',
+                data: history.map((i) => i.hashrate.solo / 1000000000),
+                color: '#6e0404',
+            }
+        ]
 
     }
 
@@ -34,8 +81,25 @@ export default function Home()
         title: {
             text: 'Network Difficulty'
         },
+
+        xAxis: {
+            categories: history.map((i) => getTimeMinutes(i.time)),
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            labels: {
+                formatter: function ()
+                {
+                    return this.value / 1000  + 'k';
+                }
+            }
+        },
+
         series: [{
-            data: [12, 223, 234, 123,2343 ]
+            name: "",
+            data: history.map((i) => i.network.difficulty)
         }]
     }
 
@@ -44,11 +108,45 @@ export default function Home()
             height: 215,
         },
         title: {
+            text: 'Pool Miners'
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+        },
+        xAxis: {
+            categories: history.map((i) => getTimeMinutes(i.time)),
+        },
+        series: [
+            {
+                name: "",
+                data: history.map((i) => i.status.miners)
+            }
+        ]
+    }
+
+    const chartOptions5 = {
+        chart: {
+            height: 215,
+        },
+        title: {
             text: 'Pool Workers'
         },
-        series: [{
-            data: [12, 223, 234, 123,2343 ]
-        }]
+        yAxis: {
+            title: {
+                text: ''
+            },
+        },
+        xAxis: {
+            categories: history.map((i) => getTimeMinutes(i.time)),
+        },
+        series: [
+            {
+                name: "",
+                data: history.map((i) => i.status.workers)
+            }
+        ]
     }
 
     const chartOption4 = {
@@ -83,18 +181,31 @@ export default function Home()
                 name: 'Share',
                 type: 'pie',
                 data: [
-                    { name: 'Chrome', y: 73.24, color: '#130685' },
-                    { name: 'Edge', y: 12.93, color: '#cc03b1' },
-                    { name: 'Firefox', y: 4.73, color: '#8b8d00' },
-                    { name: 'Safari', y: 2.50, color: '#027c12' },
-                    { name: 'Internet Explorer', y: 1.65, color: '#160bac' },
-                    { name: 'Other', y: 4.93, color: '#eb3e3e' }
+                    { name: 'Network', y: statistic?.network?.hashrate, color: '#130685' },
+                    { name: 'Pool Hashrate', y: statistic?.hashrate?.shared, color: '#cc03b1' },
                 ]
             }
         ]
     }
 
 
+    useEffect(() =>
+    {
+        statisticApi()
+            .then(({ data }) =>
+            {
+                setStatistic(data?.body?.primary)
+            })
+            .catch(e=>console.log(e))
+        historicalApi()
+            .then(({ data }) =>
+            {
+                setHistory(data?.body?.primary)
+            })
+            .catch(e=>console.log(e))
+    }, [])
+
+    console.log(statistic)
 
     return (
         <MainLayout>
@@ -124,6 +235,7 @@ export default function Home()
                         <Space
                             direction="vertical"
                             size={24}
+                            style={{ width: "100%" }}
                         >
                             <Card>
                                 <HighchartsReact
@@ -145,6 +257,7 @@ export default function Home()
                         <Space
                             direction="vertical"
                             size={24}
+                            style={{ width: "100%" }}
                         >
                             <Card>
                                 <HighchartsReact
@@ -155,10 +268,113 @@ export default function Home()
                             <Card>
                                 <HighchartsReact
                                     highcharts={Highcharts}
-                                    options={chartOptions3}
+                                    options={chartOptions5}
                                 />
                             </Card>
                         </Space>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool Shared hashrate"
+                                value={
+                                    hashRateFormat(statistic?.hashrate?.shared || 0, 3, 'H/s')
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                            />
+                        </Card>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool TTF"
+                                value={
+                                    0
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                            />
+                        </Card>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool Round Shares"
+                                value={
+                                    statistic?.shares?.valid
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                            />
+                        </Card>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool Round Effort"
+                                precision={2}
+                                value={
+                                    statistic?.status?.effort
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                                suffix="%"
+                            />
+                        </Card>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool Solo hashrate"
+                                value={
+                                    hashRateFormat(statistic?.hashrate?.solo || 0, 3, 'H/s')
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                            />
+                        </Card>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool Fee"
+                                precision={2}
+                                value={
+                                    (statistic?.config?.recipientFee || 0) * 100
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                                suffix="%"
+                            />
+                        </Card>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool Payout Threshold"
+                                precision={0}
+                                value={
+                                    (statistic?.config?.minPayment || 0)
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                            />
+                        </Card>
+                    </Col>
+
+                    <Col span={6}>
+                        <Card>
+                            <Statistic
+                                title="Pool Payment Interval"
+                                precision={0}
+                                value={
+                                    (statistic?.config?.paymentInterval || 0) / 60
+                                }
+                                valueStyle={{ color: '#3f8600' }}
+                                suffix="minutes"
+                            />
+                        </Card>
                     </Col>
                 </Row>
             </Container>

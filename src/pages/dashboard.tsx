@@ -2,10 +2,8 @@ import { Card, Col, Input, Row, Segmented, Statistic, Table } from "antd";
 import Container from "components/container";
 import MainLayout from "layouts";
 import { NextPage } from "next";
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import { useEffect, useState } from "react";
-import { minersApi, validBlocksApi, workersApi } from "api";
+import { allMinersApi, minersApi, validBlocksApi, workersApi } from "api";
 import { hashRateFormat } from "utils/unit.helper";
 
 
@@ -17,6 +15,7 @@ const DashboardPage: NextPage = () =>
     const [miner, setMiner] = useState<any>({});
     const [workers, setWorkers] = useState<any[]>([]);
     const [solos, setSolos] = useState<any[]>([]);
+    const [activeSolos, setActiveSolos] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [pool, setPool] = useState<any>({});
 
@@ -105,7 +104,10 @@ const DashboardPage: NextPage = () =>
         return minersApi(w)
             .then(({ data }) => 
             {
-                setMiner(data?.body?.primary)
+                setMiner({
+                    ...data?.body?.primary,
+                    miner: w
+                })
                 console.log(data?.body?.primary?.workers?.solo?.length)
                 if (data?.body?.primary?.workers?.solo?.length > 0) 
                 {
@@ -163,10 +165,16 @@ const DashboardPage: NextPage = () =>
             {
                 setPool(data?.body?.primary);
             })
+            .catch(e=>console.log(e))
+        allMinersApi()
+            .then(({ data }) =>
+            {
+                console.log(data.body?.primary?.solo)
+                setActiveSolos(data.body?.primary?.solo)
+            })
     }, [])
 
-    console.log(pool?.shares?.valid)
-    console.log(miner?.shares?.[current]?.valid || 0)
+    console.log(miner)
 
     return (
         <MainLayout>
@@ -207,14 +215,7 @@ const DashboardPage: NextPage = () =>
                             />
                         </Card>
                     </Col>
-                    {/* <Col span={12}>
-                        <Card>
-                            <HighchartsReact
-                                highcharts={Highcharts}
-                                options={chartOptions}
-                            />
-                        </Card>
-                   </Col>  */}
+
                     <Col span={12}>
                         <Card>
                             <Statistic
@@ -222,8 +223,7 @@ const DashboardPage: NextPage = () =>
                                 value={hashRateFormat(miner.hashrate?.[current] || 0, 3, "H/s")}
                                 precision={2}
                                 valueStyle={{ color: '#3f8600' }}
-                                // prefix={<ArrowUpOutlined />}
-                                // suffix="%"
+
                             />
                         </Card>
                     </Col>
@@ -238,37 +238,33 @@ const DashboardPage: NextPage = () =>
                                 }
                                 precision={0}
                                 valueStyle={{ color: '#3f8600' }}
-                                // prefix={<ArrowUpOutlined />}
-                                // suffix="%"
                             />
                         </Card>
                     </Col>
-                    <Col span={current !== 'solo' ? 8 : 12}>
+                    <Col span={8}>
                         <Card>
                             <Statistic
                                 title="Pending"
                                 value={miner.payments?.immature || 0}
                                 precision={2}
                                 valueStyle={{ color: '#3f8600' }}
-                                // prefix={<ArrowUpOutlined />}
                                 suffix="EVR"
                             />
                         </Card>
                     </Col>
-                    <Col span={current !== 'solo' ? 8 : 12}>
+                    <Col span={8}>
                         <Card>
                             <Statistic
                                 title="Paid"
                                 value={miner.payments?.paid || 0}
                                 precision={2}
                                 valueStyle={{ color: '#3f8600' }}
-                                // prefix={<ArrowUpOutlined />}
                                 suffix="EVR"
                             />
                         </Card>
                     </Col>
                     {
-                        current !== 'solo' && (
+                        current !== 'solo' ? (
                             <Col span={8}>
                                 <Card>
                                     <Statistic
@@ -278,8 +274,22 @@ const DashboardPage: NextPage = () =>
                                         }
                                         precision={2}
                                         valueStyle={{ color: '#3f8600' }}
-                                        // prefix={<ArrowUpOutlined />}
                                         suffix="EVR"
+                                    />
+                                </Card>
+                            </Col>
+                        ) : (
+                            <Col span={8}>
+                                <Card>
+                                    <Statistic
+                                        title="Solo Effort"
+                                        value={
+                                            activeSolos.filter((i) => i.miner === miner.miner)?.[0]?.effort || 0
+                                        }
+                                        precision={2}
+                                        valueStyle={{ color: '#3f8600' }}
+                                        // prefix={<ArrowUpOutlined />}
+                                        suffix="%"
                                     />
                                 </Card>
                             </Col>

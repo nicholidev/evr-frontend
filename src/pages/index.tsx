@@ -8,7 +8,7 @@ import Container from 'components/container'
 import { useEffect, useState } from 'react'
 import { historicalApi, statisticApi } from "../api";
 import { hashRateFormat } from 'utils/unit.helper'
-import { getTimeMinutes } from "../utils/time.helper";
+import { getHoursMinutes, getTimeMinutes } from "../utils/time.helper";
 
 
 export default function Home() 
@@ -291,7 +291,7 @@ export default function Home()
                             <Statistic
                                 title="Pool TTF"
                                 value={
-                                    0
+                                    getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
                                 }
                                 valueStyle={{ color: '#3f8600' }}
                             />

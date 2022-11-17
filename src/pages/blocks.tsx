@@ -4,10 +4,11 @@ import Container from "components/container";
 import MainLayout from "layouts";
 import { NextPage } from "next";
 import { Fragment, useEffect, useState } from "react";
-import { getTimeMinutes } from "utils/time.helper";
+import { getTimeFormat, getTimeMinutes } from "utils/time.helper";
 
 
-const BlocksPage: NextPage = () => {
+const BlocksPage: NextPage = () => 
+{
 
     const [confirmed, setConfirmed] = useState<any[]>([]);
 
@@ -24,9 +25,11 @@ const BlocksPage: NextPage = () => {
     const [current, setCurrent] = useState<"confirmed" | "pending" | "kicked">("confirmed");
 
 
-    useEffect(() => {
+    useEffect(() => 
+    {
         blocksApi()
-            .then(({ data }) => {
+            .then(({ data }) => 
+            {
                 const dat = data?.body?.primary;
                 setConfirmed(dat?.confirmed?.map((i: any) => { i.key = i.transaction; i.percent = 100; return i }));
                 setKicked(dat?.kicked?.map((i: any) => { i.key = i.transaction; i.percent = "kicked"; return i }));
@@ -35,13 +38,15 @@ const BlocksPage: NextPage = () => {
             .catch(e => console.log(e))
         
         luckApi()
-            .then(({data}) => {
+            .then(({ data }) => 
+            {
                 setLuck(data?.body?.primary?.status?.luck)
             })
             .catch(e=>console.log(e))
         
         validBlocksApi()
-            .then(({data}) => {
+            .then(({ data }) => 
+            {
                 setBlocks(data?.body?.primary?.blocks)
                 setNetwork(data?.body?.primary?.network)
             })
@@ -61,16 +66,18 @@ const BlocksPage: NextPage = () => {
             dataIndex: 'time',
             align: "center",
             width: 200,
-            render: (time: number) => {
+            render: (time: number) => 
+            {
                 return (
-                    <span>{getTimeMinutes(time)}</span>
+                    <span>{getTimeFormat(time)}</span>
                 )
             }
         },
         {
             title: 'Worker',
             align: "left",
-            render: (row: any) => {
+            render: (row: any) => 
+            {
                 return (
                     <Space>
                         {row.worker}
@@ -114,7 +121,8 @@ const BlocksPage: NextPage = () => {
             title: 'Status',
             width: 200,
             align: "center",
-            render: (i: any) => {
+            render: (i: any) => 
+            {
                 return (
                     i.percent === 'kicked' ? (
                         <Tag
@@ -190,28 +198,28 @@ const BlocksPage: NextPage = () => {
                         </Card>
                     </Col>
                     <Col span={24}>
-                        <Segmented
-                            block
-                            size="large"
-                            value={current}
-                            onChange={(e) => { setCurrent(e) }}
-                            options={[
-                                {
-                                    value: "confirmed",
-                                    label: <b>Confirmed</b>
-                                },
-                                {
-                                    value: "pending",
-                                    label: <b>Pending</b>
-                                },
-                                {
-                                    value: "kicked",
-                                    label: <b>Kicked</b>
-                                },
-                            ]}
-                        />
-
-
+                        <Card>
+                            <Segmented
+                                block
+                                size="large"
+                                value={current}
+                                onChange={(e) => { setCurrent(e) }}
+                                options={[
+                                    {
+                                        value: "confirmed",
+                                        label: <b>Confirmed</b>
+                                    },
+                                    {
+                                        value: "pending",
+                                        label: <b>Pending</b>
+                                    },
+                                    {
+                                        value: "kicked",
+                                        label: <b>Kicked</b>
+                                    },
+                                ]}
+                            />
+                        </Card>
                     </Col>
                     <Col span={24}>
                         <Table

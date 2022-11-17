@@ -18,3 +18,6 @@ export const minersApi = async (w: string) => api.get(`/EVR/miners/?method=${w}`
 // Statistic
 export const statisticApi = async () => api.get('/EVR/statistics')
 export const historicalApi = async () =>api.get('/EVR/historical')
+
+// Payments
+export const paymentsApi = async () => api.get('/EVR/payments?method=records')

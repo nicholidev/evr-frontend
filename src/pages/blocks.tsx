@@ -3,8 +3,8 @@ import { blocksApi, luckApi, validBlocksApi } from "api";
 import Container from "components/container";
 import MainLayout from "layouts";
 import { NextPage } from "next";
-import { Fragment, useEffect, useState } from "react";
-import { getTimeFormat, getTimeMinutes } from "utils/time.helper";
+import { useEffect, useState } from "react";
+import { getTimeFormat } from "utils/time.helper";
 
 
 const BlocksPage: NextPage = () => 
@@ -31,26 +31,40 @@ const BlocksPage: NextPage = () =>
             .then(({ data }) => 
             {
                 const dat = data?.body?.primary;
-                setConfirmed(dat?.confirmed?.map((i: any) => { i.key = i.transaction; i.percent = 100; return i }));
-                setKicked(dat?.kicked?.map((i: any) => { i.key = i.transaction; i.percent = "kicked"; return i }));
-                setPending(dat?.pending?.map((i: any) => { i.key = i.transaction; return i }));
+                setConfirmed(dat?.confirmed?.map((i: any) => 
+                {
+                    i.key = i.transaction;
+                    i.percent = 100;
+                    return i
+                }));
+                setKicked(dat?.kicked?.map((i: any) => 
+                {
+                    i.key = i.transaction;
+                    i.percent = "kicked";
+                    return i
+                }));
+                setPending(dat?.pending?.map((i: any) => 
+                {
+                    i.key = i.transaction;
+                    return i
+                }));
             })
             .catch(e => console.log(e))
-        
+
         luckApi()
             .then(({ data }) => 
             {
                 setLuck(data?.body?.primary?.status?.luck)
             })
-            .catch(e=>console.log(e))
-        
+            .catch(e => console.log(e))
+
         validBlocksApi()
             .then(({ data }) => 
             {
                 setBlocks(data?.body?.primary?.blocks)
                 setNetwork(data?.body?.primary?.network)
             })
-            .catch(e=>console.log(e))
+            .catch(e => console.log(e))
     }, [])
 
 
@@ -132,7 +146,7 @@ const BlocksPage: NextPage = () =>
                         </Tag>
                     ) : (
                         <Progress
-                            percent={i.percent || ((network.height - i.height ) > 99 ? 99 : (network.height - i.height ))}
+                            percent={i.percent || ((network.height - i.height) > 99 ? 99 : (network.height - i.height))}
                             showInfo={true}
                             strokeColor={{
                                 '0%': '#108ee9',
@@ -203,7 +217,10 @@ const BlocksPage: NextPage = () =>
                                 block
                                 size="large"
                                 value={current}
-                                onChange={(e) => { setCurrent(e) }}
+                                onChange={(e: any) => 
+                                {
+                                    setCurrent(e)
+                                }}
                                 options={[
                                     {
                                         value: "confirmed",

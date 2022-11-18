@@ -8,10 +8,10 @@ module.exports = withPlugins(
             {
                 modifyVars: {
                     "@primary-color": "#53A2BE",
-                    "@background-color-base": "#0A2239",
-                    "@layout-body-background": "#0A2239",
-                    "@layout-footer-background": "#0A2239",
-                    "@layout-header-background": "#0A2239",
+                    "@background-color-base": "#121212",
+                    "@layout-body-background": "#121212",
+                    "@layout-footer-background": "#121212",
+                    "@layout-header-background": "#121212",
                     "@layout-header-height": "100px",
                     "@layout-header-padding": "0px",
                     "@card-background": "#132E32",

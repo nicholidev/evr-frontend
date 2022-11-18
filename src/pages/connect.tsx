@@ -18,7 +18,7 @@ const data = [
     },
 ];
 
-const ConnectPage: NextPage = () =>
+const ConnectPage: NextPage = () => 
 {
     return (
         <MainLayout>
@@ -51,7 +51,8 @@ const ConnectPage: NextPage = () =>
                             title="Settings for T-Rex:"
                         >
                             <code>
-                                t-rex.exe -a kawpow -o stratum+tcp://stratum.ravenpool.ninja:4444 -u WALLET_ADDRESS.WORKER -p x
+                                t-rex.exe -a kawpow -o stratum+tcp://stratum.ravenpool.ninja:4444 -u
+                                WALLET_ADDRESS.WORKER -p x
                                 pause
                             </code>
                         </Card>
@@ -61,7 +62,8 @@ const ConnectPage: NextPage = () =>
                             title="Settings for T-Rex:"
                         >
                             <code>
-                                t-rex.exe -a kawpow -o stratum+tcp://stratum.ravenpool.ninja:4444 -u WALLET_ADDRESS.WORKER -p x
+                                t-rex.exe -a kawpow -o stratum+tcp://stratum.ravenpool.ninja:4444 -u
+                                WALLET_ADDRESS.WORKER -p x
                                 pause
                             </code>
                         </Card>
@@ -71,7 +73,8 @@ const ConnectPage: NextPage = () =>
                             title="Settings for T-Rex:"
                         >
                             <code>
-                                t-rex.exe -a kawpow -o stratum+tcp://stratum.ravenpool.ninja:4444 -u WALLET_ADDRESS.WORKER -p x
+                                t-rex.exe -a kawpow -o stratum+tcp://stratum.ravenpool.ninja:4444 -u
+                                WALLET_ADDRESS.WORKER -p x
                                 pause
                             </code>
                         </Card>
@@ -84,7 +87,7 @@ const ConnectPage: NextPage = () =>
                             <Space
                                 direction="vertical"
                                 size={24}
-                                style={{ alignItems:"center", width: "100%" }}
+                                style={{ alignItems: "center", width: "100%" }}
                             >
                                 <img src="https://i.imgur.com/FXSlZNc.png" alt=""/>
                                 <img src="https://i.imgur.com/FXSlZNc.png" alt=""/>

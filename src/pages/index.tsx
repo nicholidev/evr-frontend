@@ -20,22 +20,35 @@ export default function Home()
     const chartOptions = {
         chart: {
             height: 500,
-            type: 'area'
+            type: 'area',
+            backgroundColor:'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: 'Pool Hashrate'
+            text: 'Pool Hashrate',
+            style: {
+                color: '#ffffff',
+                fontWeight: 'bold'
+            }
         },
         xAxis: {
             categories: history.map((i) => getTimeMinutes(i.time)),
+            labels: {
+                style: {
+                    color: '#f0f0f0'
+                }
+            }
         },
         yAxis: {
             title: {
                 text: ''
             },
             labels: {
-                formatter: function ()
+                formatter: function () 
                 {
-                    return this.value  + 'GH/s';
+                    return this.value + 'GH/s';
+                },
+                style: {
+                    color: '#f0f0f0'
                 }
             }
         },
@@ -63,12 +76,12 @@ export default function Home()
             {
                 name: 'Shared',
                 data: history.map((i) => i.hashrate.shared / 1000000000),
-                color: '#4eb000',
+                color: '#90ee7e',
             },
             {
                 name: 'Solo',
                 data: history.map((i) => i.hashrate.solo / 1000000000),
-                color: '#6e0404',
+                color: '#2b908f',
             }
         ]
 
@@ -77,23 +90,32 @@ export default function Home()
     const chartOptions2 = {
         chart: {
             height: 215,
+            backgroundColor:'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: 'Network Difficulty'
+            text: 'Network Difficulty',
+            style: {
+                color: '#ffffff',
+                fontWeight: 'bold'
+            }
         },
-
+        legend:{ enabled:false },
         xAxis: {
             categories: history.map((i) => getTimeMinutes(i.time)),
+            labels: {
+                enabled: false
+            },
         },
         yAxis: {
             title: {
                 text: ''
             },
+
             labels: {
-                formatter: function ()
+                formatter: function () 
                 {
-                    return this.value / 1000  + 'k';
-                }
+                    return this.value / 1000 + 'k';
+                },
             }
         },
 
@@ -106,10 +128,16 @@ export default function Home()
     const chartOptions3 = {
         chart: {
             height: 215,
+            backgroundColor:'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: 'Pool Miners'
+            text: 'Pool Miners',
+            style: {
+                color: '#ffffff',
+                fontWeight: 'bold'
+            }
         },
+        legend:{ enabled:false },
         yAxis: {
             title: {
                 text: ''
@@ -117,6 +145,9 @@ export default function Home()
         },
         xAxis: {
             categories: history.map((i) => getTimeMinutes(i.time)),
+            labels: {
+                enabled: false
+            },
         },
         series: [
             {
@@ -129,10 +160,16 @@ export default function Home()
     const chartOptions5 = {
         chart: {
             height: 215,
+            backgroundColor:'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: 'Pool Workers'
+            text: 'Pool Workers',
+            style: {
+                color: '#ffffff',
+                fontWeight: 'bold'
+            }
         },
+        legend:{ enabled:false },
         yAxis: {
             title: {
                 text: ''
@@ -140,6 +177,9 @@ export default function Home()
         },
         xAxis: {
             categories: history.map((i) => getTimeMinutes(i.time)),
+            labels: {
+                enabled: false
+            },
         },
         series: [
             {
@@ -156,10 +196,15 @@ export default function Home()
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie',
-            height: 215
+            height: 215,
+            backgroundColor:'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: ''
+            text: 'Network Dominance',
+            style: {
+                color: '#ffffff',
+                fontWeight: 'bold'
+            }
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -170,7 +215,7 @@ export default function Home()
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
                     connectorColor: 'silver'
                 }
@@ -189,20 +234,20 @@ export default function Home()
     }
 
 
-    useEffect(() =>
+    useEffect(() => 
     {
         statisticApi()
-            .then(({ data }) =>
+            .then(({ data }) => 
             {
                 setStatistic(data?.body?.primary)
             })
-            .catch(e=>console.log(e))
+            .catch(e => console.log(e))
         historicalApi()
-            .then(({ data }) =>
+            .then(({ data }) => 
             {
                 setHistory(data?.body?.primary)
             })
-            .catch(e=>console.log(e))
+            .catch(e => console.log(e))
     }, [])
 
     console.log(statistic)
@@ -211,8 +256,8 @@ export default function Home()
         <MainLayout>
             <Head>
                 <title>Create Next App</title>
-                <meta name="description" content="Generated by create next app" />
-                <link rel="icon" href="/favicon.ico" />
+                <meta name="description" content="Generated by create next app"/>
+                <link rel="icon" href="/favicon.ico"/>
             </Head>
 
             <Container>
@@ -222,7 +267,7 @@ export default function Home()
                     <Col
                         span={12}
                     >
-                        <Card>
+                        <Card className="no-padding-card">
                             <HighchartsReact
                                 highcharts={Highcharts}
                                 options={chartOptions}
@@ -237,13 +282,13 @@ export default function Home()
                             size={24}
                             style={{ width: "100%" }}
                         >
-                            <Card>
+                            <Card className="no-padding-card">
                                 <HighchartsReact
                                     highcharts={Highcharts}
                                     options={chartOptions2}
                                 />
                             </Card>
-                            <Card>
+                            <Card className="no-padding-card">
                                 <HighchartsReact
                                     highcharts={Highcharts}
                                     options={chartOptions3}
@@ -259,13 +304,13 @@ export default function Home()
                             size={24}
                             style={{ width: "100%" }}
                         >
-                            <Card>
+                            <Card className="no-padding-card">
                                 <HighchartsReact
                                     highcharts={Highcharts}
                                     options={chartOption4}
                                 />
                             </Card>
-                            <Card>
+                            <Card className="no-padding-card">
                                 <HighchartsReact
                                     highcharts={Highcharts}
                                     options={chartOptions5}

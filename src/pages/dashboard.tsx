@@ -19,16 +19,6 @@ const DashboardPage: NextPage = () =>
     const [loading, setLoading] = useState(false);
     const [pool, setPool] = useState<any>({});
 
-    const chartOptions = {
-        title: {
-            text: 'My chart'
-        },
-        series: [{
-            data: [1, 2, 3]
-        }]
-    }
-
-
     const columns: any[] = [
         {
             title: current === "solo" ? "Solo Worker" : "Worker Name",
@@ -36,9 +26,8 @@ const DashboardPage: NextPage = () =>
         },
         {
             title: "Worker Hashrate",
-            align: "right",
-            sorter: (a: any, b: any) => b.hashrate?.shared - a.hashrate?.shared,
-            render: (i: any) =>
+            align: "center",
+            render: (i: any) => 
             {
                 return (
                     <span>
@@ -51,20 +40,24 @@ const DashboardPage: NextPage = () =>
                 )
             }
         },
-        {
-            title: "Work",
-            render: (i: any) => (current === 'solo' ? i.work?.solo : i.work?.shared).toFixed(0)
-        },
+        // {
+        //     title: "Work",
+        //     align: "center",
+        //     render: (i: any) => (current === 'solo' ? i.work?.solo : i.work?.shared).toFixed(0)
+        // },
         {
             title: "Valid",
+            align: "center",
             render: (i: any) => (current === 'solo' ? i.shares?.solo?.valid : i.shares?.shared?.valid).toFixed(0)
         },
         {
             title: "Invalid",
+            align: "center",
             render: (i: any) => (current === 'solo' ? i.shares?.solo?.invalid : i.shares?.shared?.invalid).toFixed(0)
         },
         {
             title: "Stale",
+            align: "center",
             render: (i: any) => (current === 'solo' ? i.shares?.solo?.stale : i.shares?.shared?.stale).toFixed(0)
         },
     ];
@@ -165,11 +158,10 @@ const DashboardPage: NextPage = () =>
             {
                 setPool(data?.body?.primary);
             })
-            .catch(e=>console.log(e))
+            .catch(e => console.log(e))
         allMinersApi()
-            .then(({ data }) =>
+            .then(({ data }) => 
             {
-                console.log(data.body?.primary?.solo)
                 setActiveSolos(data.body?.primary?.solo)
             })
     }, [])
@@ -232,7 +224,7 @@ const DashboardPage: NextPage = () =>
                             <Statistic
                                 title="Workers"
                                 value={
-                                    current === 'solo' ? 
+                                    current === 'solo' ?
                                         solos.filter((i) => i?.hashrate?.solo > 0).length :
                                         workers.filter((i) => i?.hashrate?.shared > 0).length
                                 }
@@ -287,7 +279,6 @@ const DashboardPage: NextPage = () =>
                                             activeSolos.filter((i) => i.miner === miner.miner)?.[0]?.effort || 0
                                         }
                                         precision={2}
-                                        valueStyle={{ color: '#3f8600' }}
                                         // prefix={<ArrowUpOutlined />}
                                         suffix="%"
                                     />
@@ -298,10 +289,10 @@ const DashboardPage: NextPage = () =>
 
                     <Col span={24}>
                         <Card>
-
                             <Table
                                 columns={columns}
                                 dataSource={current === "solo" ? solos : workers}
+                                pagination={false}
                             />
                         </Card>
                     </Col>

@@ -13,9 +13,23 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: #121212;
   }
+  
+  img {
+    max-width: 100%;
+  }
 
   .ant-layout-header {
     padding: 0 24px;
+    display: flex;
+    align-items: center;
+    grid-gap: 24px;
+    justify-content: space-between;
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      grid-gap: 12px;
+    }
 
     .ant-menu {
       .ant-menu-overflow-item {
@@ -30,6 +44,112 @@ const GlobalStyle = createGlobalStyle`
         &.ant-menu-item-selected, :hover {
           background-color: transparent;
           color: #ffffff;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      height: 72px;
+      img {
+        width: 72px;
+        height: 72px;
+      }
+    }
+  }
+
+  .hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 46px;
+    height: 46px;
+    background-color: transparent;
+    border: none;
+
+    svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    :hover, :active, :focus {
+      background-color: transparent;
+    }
+
+    @media (max-width: 768px) {
+      width: 42px;
+      height: 42px;
+      svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  .ant-drawer-mask {
+    background-color: rgba(255, 255, 255, .1);
+  }
+
+  .ant-drawer-content-wrapper {
+    max-width: 100%;
+  }
+
+  .ant-drawer-content {
+    background-color: #121212;
+
+    .ant-drawer-header {
+      border-bottom: none;
+
+      .ant-drawer-header-title {
+        button {
+          color: #ffffff;
+
+          svg {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+
+
+    .ant-drawer-body {
+      padding: 0;
+
+      .ant-menu-item {
+        height: 55px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        padding: 0 24px;
+        font-weight: 600;
+
+        &.ant-menu-item-selected {
+          background-color: #53A2BE1f;
+        }
+      }
+
+      .social-area-menu {
+        display: flex;
+        flex-direction: column;
+        grid-gap: 12px;
+        padding: 3px 12px;
+        margin-top: 32px;
+
+        a {
+          height: 50px;
+          border-radius: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 !important;
+          background-color: #53A2BE1f;
+          color: #53A2BE;
+
+          svg {
+            width: 32px;
+            height: 32px;
+          }
         }
       }
     }
@@ -150,6 +270,93 @@ const GlobalStyle = createGlobalStyle`
         }
       }
     }
+
+    @media (max-width: 1200px) {
+      .ant-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .footer-logo-area {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .ant-row {
+        .ant-col{
+          width: 100%;
+        }
+        
+        .footer-logo-area {
+          img {
+            width: 120px;
+            height: 120px;
+          }
+
+          div {
+            grid-gap: 2px;
+
+            h1 {
+              font-size: 24px;
+            }
+
+            p {
+              font-size: 12px;
+            }
+          }
+        }
+        
+        .donation-area {
+          padding: 24px;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          width: 100%;
+          button {
+            width: 200px;
+            height: 50px;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+    
+    @media (max-width: 450px) {
+      .ant-row {
+
+        .footer-logo-area {
+          img {
+            width: 120px;
+            height: 120px;
+          }
+
+          div {
+            grid-gap: 2px;
+
+            h1 {
+              font-size: 24px;
+            }
+
+            p {
+              font-size: 12px;
+            }
+          }
+        }
+
+        .donation-area {
+          font-size: 12px;
+         
+        }
+      }
+    }
   }
 
   .copyright {
@@ -160,6 +367,9 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
     padding: 24px;
     text-align: center;
+    @media (max-width: 450px) {
+      font-size: 10px;
+    }
   }
 
   .ant-statistic-title {
@@ -169,13 +379,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .ant-statistic-content-value {
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 600;
     color: #28c3f2;
   }
 
   .ant-statistic-content-suffix {
-    font-size: 24px;
+    font-size: 12px;
     font-weight: 600;
     color: #28c3f2;
   }
@@ -276,6 +486,16 @@ const GlobalStyle = createGlobalStyle`
       font-weight: 600;
       text-transform: uppercase;
     }
+    
+    &.ant-table-small {
+      th, td {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .ant-table-cell-fix-left, .ant-table-cell-fix-right {
+    background-color: #121212;
   }
 
   .ant-tag {
@@ -299,7 +519,17 @@ const GlobalStyle = createGlobalStyle`
 
   .ant-list-split .ant-list-item {
     border-bottom: 1px solid #28c3f2;
+  
   }
+  
+  .ant-card-body{
+    .ant-list{
+      h5{
+        font-weight: bold!important;
+      }
+    }
+  }
+ 
 
   .ant-collapse {
     background-color: transparent;
@@ -351,9 +581,29 @@ const GlobalStyle = createGlobalStyle`
       stroke: #676767;
     }
   }
+
+  .highcharts-credits {
+    display: none !important;
+  }
   
-  .highcharts-credits{
-    display: none!important;
+  .page-title{
+    color: #28c3f2;
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
+  .ant-progress-text{
+    color: #ffffff;
+  }
+  
+  .timer{
+    color: #ffffff;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 8px;
   }
 `
 

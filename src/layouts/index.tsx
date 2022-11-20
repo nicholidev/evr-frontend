@@ -1,88 +1,131 @@
-import { Button, Col, Layout, Menu, message, Row, Space, Tooltip } from "antd";
-import { FC } from "react";
+import { Button, Col, Drawer, Grid, Layout, Menu, message, Row, Space, Tooltip } from "antd";
+import { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { Icon } from "@iconify/react";
 
 const { Header, Content, Footer } = Layout;
+const { useBreakpoint } = Grid;
 
 
 interface Props {
     children?: any;
 }
 
+const Menus: any = ({ breakpoints, clickHandle, router }: any) => 
+{
+
+    return (
+        <Menu
+            theme="dark"
+            mode={breakpoints.xl ? "horizontal" : "vertical"}
+            selectedKeys={!!router.asPath.split("/")[1] ? router.asPath.split("/") : ['home']}
+            onClick={clickHandle}
+            items={[
+                {
+                    key: "home",
+                    label: `Home`,
+                },
+                {
+                    key: "dashboard",
+                    label: `Dashboard`,
+                },
+
+                {
+                    key: "miners",
+                    label: `Miners`,
+                },
+                {
+                    key: "blocks",
+                    label: `Blocks`,
+                },
+                {
+                    key: "payments",
+                    label: `Payments`,
+                },
+                {
+                    key: "connect",
+                    label: `Connect`,
+                },
+                {
+                    key: "faq",
+                    label: `Faq`,
+                },
+                {
+                    key: "exchange",
+                    label: `Exchange`,
+                },
+            ]}
+        />
+    )
+}
+
 const MainLayout: FC<Props> = (props) => 
 {
     const { children } = props;
 
+    const breakpoints = useBreakpoint();
+
     const router: any = useRouter();
 
-    const clickHandle = (e: any) =>
+    const [mn, setMn] = useState(false);
+
+    const clickHandle = (e: any) => 
     {
-        if(e.key === 'exchange')
+        if (e.key === 'exchange') 
         {
             return window.open(
                 'https://coinswap.ninja/',
                 '_blank' // <- This is what makes it open in a new window.
             );
         }
+        if (e.key === 'home')
+        {
+            return router.push(`/`)
+        }
 
         return router.push(`/${e.key}`)
     }
 
+
     return (
-        <Layout >
+        <Layout>
             <Header>
-                <Row justify="space-between" align="middle">
-                    <Col span={2}>
-                        <div onClick={()=>{router.push("/")}} style={{ cursor: "pointer" }}>
-                            <img src="/logo.png" width={100} height={100} alt=""/>
-                        </div>
-                    </Col>
-                    <Col span={18}>
-                        <Menu
-                            theme="dark"
-                            mode="horizontal"
-                            defaultSelectedKeys={router.asPath.split("/")}
-                            onClick={clickHandle}
-                            items={[
-                                {
-                                    key: "dashboard",
-                                    label: `Dashboard`,
-                                },
-                                {
-                                    key: "exchange",
-                                    label: `Exchange`,
-                                },
-                                {
-                                    key: "miners",
-                                    label: `Miners`,
-                                },
-                                {
-                                    key: "blocks",
-                                    label: `Blocks`,
-                                },
-                                {
-                                    key: "payments",
-                                    label: `Payments`,
-                                },
-                                {
-                                    key: "connect",
-                                    label: `Connect`,
-                                },
-                                {
-                                    key: "faq",
-                                    label: `Faq`,
-                                },
-                            ]}
+                <div className="logo-area">
+                    <div
+                        onClick={() => 
+                        {
+                            router.push("/")
+                        }}
+                        style={{ cursor: "pointer" }}
+                    >
+                        <img
+                            src="/logo.png"
+                            width={100}
+                            height={100}
+                            alt=""
                         />
-                    </Col>
-                    <Col style={{ alignItems: "center", display: "flex" }}>
+                    </div>
+
+                    {
+                        breakpoints.xl && (
+                            <Menus
+                                breakpoints={breakpoints}
+                                clickHandle={clickHandle}
+                                router={router}
+                            />
+                        )
+                    }
+                </div>
+
+                {
+                    breakpoints.xl && (
                         <div className="social-area">
                             <Button
                                 type="primary"
                                 size="large"
                                 className="social-button"
-                                href="mailto:support@ravenpool.ninja?subject=EVRPool.ninja: EVR Mining Support Request" title="Send us an E-Mail!"
+                                href="mailto:support@ravenpool.ninja?subject=EVRPool.ninja: EVR Mining Support Request"
+                                title="Send us an E-Mail!"
                             >
                                 <Icon icon="ic:sharp-email"/>
                             </Button>
@@ -96,17 +139,66 @@ const MainLayout: FC<Props> = (props) =>
                                 <Icon icon="ic:baseline-discord"/>
                             </Button>
                         </div>
-                    </Col>
-                </Row>
+                    )
+                }
 
+                {
+                    !breakpoints.xl && (
+                        <div>
+                            <Button
+                                type="primary"
+                                size="large"
+                                shape="circle"
+                                className="hamburger-btn"
+                                onClick={()=>{setMn(true)}}
+                            >
+                                <Icon icon="ci:hamburger"/>
+                            </Button>
+                        </div>
+                    )
+                }
+
+                <Drawer
+                    open={mn}
+                    closeIcon={<Icon icon="material-symbols:close"/>}
+                    onClose={()=>{setMn(false)}}
+                    width={450}
+                >
+                    <Menus
+                        breakpoints={breakpoints}
+                        clickHandle={clickHandle}
+                        router={router}
+                    />
+                    <div className="social-area-menu">
+                        <Button
+                            type="primary"
+                            size="large"
+                            href="mailto:support@ravenpool.ninja?subject=EVRPool.ninja: EVR Mining Support Request"
+                            title="Send us an E-Mail!"
+                        >
+                            <Icon icon="ic:sharp-email"/>
+                        </Button>
+                        <Button
+                            type="primary"
+                            size="large"
+                            href="https://discord.gg/hQNyqn3ksh"
+                            target="_blank"
+                        >
+                            <Icon icon="ic:baseline-discord"/>
+                        </Button>
+                    </div>
+                </Drawer>
             </Header>
-            <Content style={{ paddingTop: "32px", paddingBottom: "52px", minHeight: "calc(100vh - 100px)" }}>
+
+            <Content style={{ paddingTop: breakpoints.sm ? 32: 20, paddingBottom: "52px", minHeight: "calc(100vh - 100px)" }}>
                 { children }
             </Content>
+
             <Footer>
                 <Row
                     justify="space-between"
                     align="middle"
+                    gutter={[32, 32]}
                 >
                     <Col>
                         <div className="footer-logo-area" onClick={()=>{router.push("/")}} style={{ cursor: "pointer" }}>
@@ -143,10 +235,11 @@ const MainLayout: FC<Props> = (props) =>
                     </Col>
                 </Row>
             </Footer>
+
             <div className="copyright">
                 ©Copyright {new Date().getFullYear()} EVRpool.ninja All Rights Reserved.
             </div>
-        </Layout >
+        </Layout>
     )
 }
 

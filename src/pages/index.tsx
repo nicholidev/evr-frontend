@@ -1,4 +1,4 @@
-import { Button, Card, Col, Divider, Row, Space, Statistic, Switch } from 'antd'
+import { Card, Col, Grid, message, Row, Space, Statistic } from 'antd'
 import Head from 'next/head'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -9,19 +9,26 @@ import { useEffect, useState } from 'react'
 import { historicalApi, statisticApi } from "../api";
 import { hashRateFormat } from 'utils/unit.helper'
 import { getHoursMinutes, getTimeMinutes } from "../utils/time.helper";
+import WithIcon from "../components/with-icon";
+
+const { useBreakpoint } = Grid;
 
 
-export default function Home() 
+const HomePage = () => 
 {
+    const breakpoints = useBreakpoint();
+
     const [statistic, setStatistic] = useState<any>({})
+
     const [history, setHistory] = useState<any[]>([])
 
+    const [t, setT] = useState(30);
 
     const chartOptions = {
         chart: {
             height: 500,
             type: 'area',
-            backgroundColor:'rgba(255, 255, 255, 0.0)',
+            backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
             text: 'Pool Hashrate',
@@ -43,9 +50,9 @@ export default function Home()
                 text: ''
             },
             labels: {
-                formatter: function () 
+                formatter: (e: any) => 
                 {
-                    return this.value + 'GH/s';
+                    return e.value + 'GH/s';
                 },
                 style: {
                     color: '#f0f0f0'
@@ -89,8 +96,8 @@ export default function Home()
 
     const chartOptions2 = {
         chart: {
-            height: 215,
-            backgroundColor:'rgba(255, 255, 255, 0.0)',
+            height: breakpoints.xl ? 215 : 500,
+            backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
             text: 'Network Difficulty',
@@ -99,11 +106,14 @@ export default function Home()
                 fontWeight: 'bold'
             }
         },
-        legend:{ enabled:false },
+        legend: { enabled: false },
         xAxis: {
             categories: history.map((i) => getTimeMinutes(i.time)),
             labels: {
-                enabled: false
+                enabled: !breakpoints.xl,
+                style: {
+                    color: '#f0f0f0'
+                }
             },
         },
         yAxis: {
@@ -112,10 +122,13 @@ export default function Home()
             },
 
             labels: {
-                formatter: function () 
+                formatter: (e: any) => 
                 {
-                    return this.value / 1000 + 'k';
+                    return e.value / 1000 + 'k';
                 },
+                style: {
+                    color: '#f0f0f0'
+                }
             }
         },
 
@@ -127,8 +140,8 @@ export default function Home()
 
     const chartOptions3 = {
         chart: {
-            height: 215,
-            backgroundColor:'rgba(255, 255, 255, 0.0)',
+            height: breakpoints.xl ? 215 : 500,
+            backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
             text: 'Pool Miners',
@@ -137,16 +150,24 @@ export default function Home()
                 fontWeight: 'bold'
             }
         },
-        legend:{ enabled:false },
+        legend: { enabled: false },
         yAxis: {
             title: {
                 text: ''
             },
+            labels: {
+                style: {
+                    color: '#f0f0f0'
+                }
+            }
         },
         xAxis: {
             categories: history.map((i) => getTimeMinutes(i.time)),
             labels: {
-                enabled: false
+                enabled: !breakpoints.xl,
+                style: {
+                    color: '#f0f0f0'
+                }
             },
         },
         series: [
@@ -159,8 +180,8 @@ export default function Home()
 
     const chartOptions5 = {
         chart: {
-            height: 215,
-            backgroundColor:'rgba(255, 255, 255, 0.0)',
+            height: breakpoints.xl ? 215 : 500,
+            backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
             text: 'Pool Workers',
@@ -169,16 +190,24 @@ export default function Home()
                 fontWeight: 'bold'
             }
         },
-        legend:{ enabled:false },
+        legend: { enabled: false },
         yAxis: {
             title: {
                 text: ''
             },
+            labels: {
+                style: {
+                    color: '#f0f0f0'
+                }
+            }
         },
         xAxis: {
             categories: history.map((i) => getTimeMinutes(i.time)),
             labels: {
-                enabled: false
+                enabled: !breakpoints.xl,
+                style: {
+                    color: '#f0f0f0'
+                }
             },
         },
         series: [
@@ -196,8 +225,8 @@ export default function Home()
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie',
-            height: 215,
-            backgroundColor:'rgba(255, 255, 255, 0.0)',
+            height: breakpoints.xl ? 215 : 500,
+            backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
             text: 'Network Dominance',
@@ -215,9 +244,9 @@ export default function Home()
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
-                    enabled: false,
+                    enabled: !breakpoints.xl,
                     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    connectorColor: 'silver'
+                    connectorColor: '#f0f0f0',
                 }
             }
         },
@@ -237,25 +266,48 @@ export default function Home()
     useEffect(() => 
     {
         statisticApi()
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 setStatistic(data?.body?.primary)
             })
             .catch(e => console.log(e))
         historicalApi()
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 setHistory(data?.body?.primary)
             })
             .catch(e => console.log(e))
     }, [])
 
-    console.log(statistic)
+    useEffect(() => 
+    {
+        const interval = setInterval(() =>
+        {
+            statisticApi()
+                .then(({ data }) =>
+                {
+                    setStatistic(data?.body?.primary);
+                    message.success({
+                        content: 'The page was refreshed',
+                    }).then(() => {console.log("")});
+                })
+                .catch(e => console.log(e))
+            historicalApi()
+                .then(({ data }) =>
+                {
+                    setHistory(data?.body?.primary)
+                })
+                .catch(e => console.log(e))
+        }, 30000);
+
+        return () => clearInterval(interval);
+    }, [])
+
 
     return (
         <MainLayout>
             <Head>
-                <title>Create Next App</title>
+                <title>Home</title>
                 <meta name="description" content="Generated by create next app"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
@@ -265,7 +317,8 @@ export default function Home()
                     gutter={[24, 24]}
                 >
                     <Col
-                        span={12}
+                        span={24}
+                        xl={{ span: 12 }}
                     >
                         <Card className="no-padding-card">
                             <HighchartsReact
@@ -274,8 +327,10 @@ export default function Home()
                             />
                         </Card>
                     </Col>
+
                     <Col
-                        span={6}
+                        span={24}
+                        xl={{ span: 6 }}
                     >
                         <Space
                             direction="vertical"
@@ -296,8 +351,10 @@ export default function Home()
                             </Card>
                         </Space>
                     </Col>
+
                     <Col
-                        span={6}
+                        span={24}
+                        xl={{ span: 6 }}
                     >
                         <Space
                             direction="vertical"
@@ -319,106 +376,155 @@ export default function Home()
                         </Space>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool Shared hashrate"
-                                value={
-                                    hashRateFormat(statistic?.hashrate?.shared || 0, 3, 'H/s')
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                            />
+                            <WithIcon icon="fa6-solid:people-roof">
+                                <Statistic
+                                    title="Pool Shared hashrate"
+                                    value={
+                                        hashRateFormat(statistic?.hashrate?.shared || 0, 3, 'H/s')
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                />
+                            </WithIcon>
                         </Card>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool TTF"
-                                value={
-                                    getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                            />
+                            <WithIcon icon="fa6-solid:hourglass-start">
+                                <Statistic
+                                    title="Pool TTF"
+                                    value={
+                                        getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                />
+                            </WithIcon>
+
                         </Card>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool Round Shares"
-                                value={
-                                    statistic?.shares?.valid
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                            />
+                            <WithIcon icon="fa6-solid:timeline">
+                                <Statistic
+                                    title="Pool Round Shares"
+                                    value={
+                                        statistic?.shares?.valid
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                />
+                            </WithIcon>
                         </Card>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool Round Effort"
-                                precision={2}
-                                value={
-                                    statistic?.status?.effort
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                                suffix="%"
-                            />
+                            <WithIcon icon="fa6-solid:person-digging">
+                                <Statistic
+                                    title="Pool Round Effort"
+                                    precision={2}
+                                    value={
+                                        statistic?.status?.effort
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                    suffix="%"
+                                />
+                            </WithIcon>
                         </Card>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool Solo hashrate"
-                                value={
-                                    hashRateFormat(statistic?.hashrate?.solo || 0, 3, 'H/s')
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                            />
+                            <WithIcon icon="fa6-solid:user-clock">
+                                <Statistic
+                                    title="Pool Solo hashrate"
+                                    value={
+                                        hashRateFormat(statistic?.hashrate?.solo || 0, 3, 'H/s')
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                />
+                            </WithIcon>
                         </Card>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool Fee"
-                                precision={2}
-                                value={
-                                    (statistic?.config?.recipientFee || 0) * 100
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                                suffix="%"
-                            />
+                            <WithIcon icon="fa6-solid:hand-holding-dollar">
+                                <Statistic
+                                    title="Pool Fee"
+                                    precision={2}
+                                    value={
+                                        (statistic?.config?.recipientFee || 0) * 100
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                    suffix="%"
+                                />
+                            </WithIcon>
                         </Card>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool Payout Threshold"
-                                precision={0}
-                                value={
-                                    (statistic?.config?.minPayment || 0)
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                            />
+                            <WithIcon icon="fa6-solid:bars-progress">
+                                <Statistic
+                                    title="Pool Payout Threshold"
+                                    precision={0}
+                                    value={
+                                        (statistic?.config?.minPayment || 0)
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                />
+                            </WithIcon>
                         </Card>
                     </Col>
 
-                    <Col span={6}>
+                    <Col
+                        span={24}
+                        sm={{ span: 12 }}
+                        xl={{ span: 6 }}
+                    >
                         <Card>
-                            <Statistic
-                                title="Pool Payment Interval"
-                                precision={0}
-                                value={
-                                    (statistic?.config?.paymentInterval || 0) / 60
-                                }
-                                valueStyle={{ color: '#3f8600' }}
-                                suffix="minutes"
-                            />
+                            <WithIcon icon="fa6-solid:clock">
+                                <Statistic
+                                    title="Pool Payment Interval"
+                                    precision={0}
+                                    value={
+                                        (statistic?.config?.paymentInterval || 0) / 60
+                                    }
+                                    valueStyle={{ color: '#3f8600' }}
+                                    suffix="minutes"
+                                />
+                            </WithIcon>
                         </Card>
                     </Col>
                 </Row>
@@ -426,3 +532,6 @@ export default function Home()
         </MainLayout>
     )
 }
+
+
+export default HomePage

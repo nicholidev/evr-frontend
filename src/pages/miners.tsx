@@ -32,7 +32,7 @@ const MinersPage: NextPage = () =>
                     <Link
                         href={`/dashboard/?miner=${i.miner}`}
                     >
-                        {i.miner} {i.effort && <Tag color="green">Solo</Tag>}
+                        {i.miner} {i.effort && <Tag color="blue">Solo</Tag>}
                     </Link>
                 )
             }

@@ -107,7 +107,7 @@ const BlocksPage: NextPage = () =>
                     <Space>
                         {row.worker}
                         {
-                            row.solo && <Tag color="purple">Solo</Tag>
+                            row.solo && <Tag color="blue">Solo</Tag>
                         }
                     </Space>
                 )

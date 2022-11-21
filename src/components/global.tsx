@@ -498,11 +498,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: #121212;
   }
 
-  .ant-tag {
-    background: #1dcbff;
-    border-color: #69dcff;
-  }
-
   .ant-list-bordered {
     border: 1px solid #28c3f2;
 

@@ -1,9 +1,9 @@
-import { Card, Col, Grid, Input, Row, Segmented, Statistic, Table } from "antd";
+import { Card, Col, Grid, Input, message, Row, Segmented, Statistic, Table, Tooltip } from "antd";
 import Container from "components/container";
 import MainLayout from "layouts";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { allMinersApi, minersApi, statisticApi, validBlocksApi, workersApi } from "api";
+import { allMinersApi, minersApi, validBlocksApi, workersApi } from "api";
 import { hashRateFormat } from "utils/unit.helper";
 import Head from "next/head";
 import WithIcon from "../components/with-icon";
@@ -17,6 +17,7 @@ const DashboardPage: NextPage = () =>
 {
     const { query }: any = useRouter();
 
+    const router: any = useRouter();
     const breakpoints = useBreakpoint();
     const [current, setCurrent] = useState<any>("shared");
     const [miner, setMiner] = useState<any>({});
@@ -134,24 +135,29 @@ const DashboardPage: NextPage = () =>
 
     const onSearch = (e: string) => 
     {
+        router.push(`/dashboard/?miner=${e}`)
+    }
+
+    const searchHandle = (e: string) =>
+    {
         setLoading(true);
         loadSharedData(e)
-            .then((res: any) => 
+            .then((res: any) =>
             {
                 setWorkers(res.sort((a: any, b: any) => b.hashrate?.shared - a.hashrate?.shared))
             })
-            .catch(e => 
+            .catch(e =>
             {
                 console.log(e)
             })
             .finally(() => setLoading(false))
 
         loadSoloData(e)
-            .then((res: any) => 
+            .then((res: any) =>
             {
                 setSolos(res.sort((a: any, b: any) => b.hashrate?.solo - a.hashrate?.solo))
             })
-            .catch(e => 
+            .catch(e =>
             {
                 console.log(e)
             })
@@ -177,13 +183,19 @@ const DashboardPage: NextPage = () =>
     {
         if (query?.miner) 
         {
-            onSearch(query.miner);
+            searchHandle(query.miner);
+            const interval = setInterval(() =>
+            {
+                searchHandle(query.miner);
+                message.success({
+                    content: 'The page was refreshed',
+                }).then(() => {console.log("")});
+            }, 30000);
+
+            return () => clearInterval(interval);
         }
     }, [query])
 
-
-    console.log(miner, "MINER")
-    console.log(pool, "POOL")
 
     return (
         <MainLayout>
@@ -237,7 +249,7 @@ const DashboardPage: NextPage = () =>
                         <Card>
                             <WithIcon icon="fa6-solid:chart-simple">
                                 <Statistic
-                                    title="Hashrate"
+                                    title={<Tooltip title="Test" color="cyan"><span>Hashrate</span></Tooltip>}
                                     value={hashRateFormat(miner.hashrate?.[current] || 0, 3, "H/s")}
                                     precision={2}
                                     valueStyle={{ color: '#3f8600' }}

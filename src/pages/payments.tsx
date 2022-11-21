@@ -32,7 +32,7 @@ const PaymentPage: NextPage = () =>
                         target="_blank"
                         rel="noreferrer"
                     >
-                        {i.transaction} {i.miners === 1 && <Tag>Solo</Tag>}
+                        {i.transaction} {i.miners === 1 && <Tag color="blue">Solo</Tag>}
                     </a>
                 )
             }

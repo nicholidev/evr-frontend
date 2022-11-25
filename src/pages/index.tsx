@@ -1,4 +1,4 @@
-import { Card, Col, Grid, message, Row, Space, Statistic } from 'antd'
+import { Card, Col, Grid, message, Row, Space, Statistic, Tooltip } from 'antd'
 import Head from 'next/head'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -229,7 +229,7 @@ const HomePage = () =>
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: 'Network Dominance',
+             text: 'Network Dominance',            
             style: {
                 color: '#ffffff',
                 fontWeight: 'bold'
@@ -252,10 +252,10 @@ const HomePage = () =>
         },
         series: [
             {
-                name: 'Share',
+                name: 'Dominance',
                 type: 'pie',
                 data: [
-                    { name: 'Network', y: statistic?.network?.hashrate, color: '#130685' },
+                    { name: 'Network Hashrate', y: statistic?.network?.hashrate, color: '#130685' },
                     { name: 'Pool Hashrate', y: statistic?.hashrate?.shared, color: '#cc03b1' },
                 ]
             }
@@ -384,7 +384,7 @@ const HomePage = () =>
                         <Card>
                             <WithIcon icon="fa6-solid:people-roof">
                                 <Statistic
-                                    title="Pool Shared hashrate"
+                                    title="Pool Hashrate"
                                     value={
                                         hashRateFormat(statistic?.hashrate?.shared || 0, 3, 'H/s')
                                     }
@@ -402,7 +402,8 @@ const HomePage = () =>
                         <Card>
                             <WithIcon icon="fa6-solid:hourglass-start">
                                 <Statistic
-                                    title="Pool TTF"
+                                    // title="Pool TTF"
+                                    title={<Tooltip title="How long until the pool solves the next block, presuming 100% Effort." color="cyan"><span>TTF <font color="yellow">(?)</font></span></Tooltip>}
                                     value={
                                         getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
                                     }
@@ -439,7 +440,8 @@ const HomePage = () =>
                         <Card>
                             <WithIcon icon="fa6-solid:person-digging">
                                 <Statistic
-                                    title="Pool Round Effort"
+                                    // title="Pool Round Effort"
+                                    title={<Tooltip title="Effort is a measure of how many hashes our pool made to find a block. Please see FAQ for more info."color="cyan"><span>Round Effort <font color="yellow">(?)</font></span></Tooltip>}
                                     precision={2}
                                     value={
                                         statistic?.status?.effort
@@ -457,9 +459,9 @@ const HomePage = () =>
                         xl={{ span: 6 }}
                     >
                         <Card>
-                            <WithIcon icon="fa6-solid:user-clock">
+                            <WithIcon icon="fa6-solid:user">
                                 <Statistic
-                                    title="Pool Solo hashrate"
+                                    title="SOLO Hashrate"
                                     value={
                                         hashRateFormat(statistic?.hashrate?.solo || 0, 3, 'H/s')
                                     }
@@ -497,12 +499,13 @@ const HomePage = () =>
                         <Card>
                             <WithIcon icon="fa6-solid:bars-progress">
                                 <Statistic
-                                    title="Pool Payout Threshold"
+                                    title="Pool Minimum Payment"
                                     precision={0}
                                     value={
                                         (statistic?.config?.minPayment || 0)
                                     }
                                     valueStyle={{ color: '#3f8600' }}
+                                    suffix="EVR"
                                 />
                             </WithIcon>
                         </Card>
@@ -522,7 +525,7 @@ const HomePage = () =>
                                         (statistic?.config?.paymentInterval || 0) / 60
                                     }
                                     valueStyle={{ color: '#3f8600' }}
-                                    suffix="minutes"
+                                    suffix="MINS"
                                 />
                             </WithIcon>
                         </Card>

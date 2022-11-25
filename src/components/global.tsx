@@ -600,6 +600,15 @@ const GlobalStyle = createGlobalStyle`
     text-align: center;
     margin-bottom: 8px;
   }
+  // Add dotted underline style
+  .dotted {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: yellow;
+}
+
+
+
 `
 
 

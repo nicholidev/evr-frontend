@@ -249,7 +249,7 @@ const DashboardPage: NextPage = () =>
                         <Card>
                             <WithIcon icon="fa6-solid:chart-simple">
                                 <Statistic
-                                    title={<Tooltip title="Test" color="cyan"><span>Hashrate</span></Tooltip>}
+                                    title={<Tooltip title="Why is my hashrate wrong?? This is real-time hashrate, (not average) which varies every few seconds. This is a limiation of current EVR pool software; if we were to plot the varying hashrate stats minute by minute you would see they average-out to the exact same number that your miner software displays. If you are in doubt, please rely on your MINER-side hashrate stats." color="cyan"><span>Hashrate <font color="yellow">(?)</font></span></Tooltip>}
                                     value={hashRateFormat(miner.hashrate?.[current] || 0, 3, "H/s")}
                                     precision={2}
                                     valueStyle={{ color: '#3f8600' }}
@@ -284,7 +284,8 @@ const DashboardPage: NextPage = () =>
                         <Card>
                             <WithIcon icon="fa6-regular:hourglass-half">
                                 <Statistic
-                                    title="Pending"
+                                    // title="Pending Balance"
+                                    title={<Tooltip title="Immature balance owed, waiting for block confirmations" color="cyan"><span>Pending Balance <font color="yellow">(?)</font></span></Tooltip>}
                                     value={miner.payments?.immature || 0}
                                     precision={2}
                                     valueStyle={{ color: '#3f8600' }}
@@ -300,7 +301,8 @@ const DashboardPage: NextPage = () =>
                         <Card>
                             <WithIcon icon="fa6-solid:sack-dollar">
                                 <Statistic
-                                    title="Paid"
+                                    // title="Paid"
+                                    title={<Tooltip title="Pool + SOLO" color="cyan"><span>Total Paid <font color="yellow">(?)</font></span></Tooltip>}
                                     value={miner.payments?.paid || 0}
                                     precision={2}
                                     valueStyle={{ color: '#3f8600' }}
@@ -318,7 +320,7 @@ const DashboardPage: NextPage = () =>
                                 <Card>
                                     <WithIcon icon="fa6-solid:magnifying-glass-dollar">
                                         <Statistic
-                                            title="Daily Estimated Earnings"
+                                            title="24hr Estimated Pool Rewards"
                                             value={
                                                 1 / (pool?.network?.hashrate || 0) * (miner?.hashrate?.[current] || 0) * (2500.20 * 86400 / 60)
                                             }

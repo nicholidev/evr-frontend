@@ -228,8 +228,8 @@ const HomePage = () =>
             height: breakpoints.xl ? 215 : 500,
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
-        title: {
-             text: 'Network Dominance',            
+        title: {            
+            text: 'Network Dominance',            
             style: {
                 color: '#ffffff',
                 fontWeight: 'bold'
@@ -403,7 +403,7 @@ const HomePage = () =>
                             <WithIcon icon="fa6-solid:hourglass-start">
                                 <Statistic
                                     // title="Pool TTF"
-                                    title={<Tooltip title="How long until the pool solves the next block, presuming 100% Effort." color="cyan"><span>TTF <font color="yellow">(?)</font></span></Tooltip>}
+                                    title={<Tooltip title="How long until the pool solves the next block, presuming 100% Effort." color="cyan"><span>TTF </span></Tooltip>}
                                     value={
                                         getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
                                     }
@@ -441,7 +441,7 @@ const HomePage = () =>
                             <WithIcon icon="fa6-solid:person-digging">
                                 <Statistic
                                     // title="Pool Round Effort"
-                                    title={<Tooltip title="Effort is a measure of how many hashes our pool made to find a block. Please see FAQ for more info."color="cyan"><span>Round Effort <font color="yellow">(?)</font></span></Tooltip>}
+                                    title={<Tooltip title="Effort is a measure of how many hashes our pool made to find a block. Please see FAQ for more info."color="cyan"><span>Round Effort</span></Tooltip>}
                                     precision={2}
                                     value={
                                         statistic?.status?.effort

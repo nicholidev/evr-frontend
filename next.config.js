@@ -24,8 +24,5 @@ module.exports = withPlugins(
         env: {
             API_ENDPOINT: process.env.API_ENDPOINT,
         },
-        images: {
-            domains: ['https://file.forextrader.org']
-        },
     }
 );

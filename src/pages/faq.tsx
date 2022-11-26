@@ -8,8 +8,8 @@ const { Panel } = Collapse;
 
 const data = [
     {
-        title: "Why is my hashrate wrong?",
-        content: "Currently, we show your mine real-time hashrate. This is a limitation of the pool software and we are working on a fix that will show your hashrate average instead, which will more accurately reflect the hashrate you see displayed in your miner software. If you are ever in doubt, please rely on the hashrate displayed by your miner software."
+        title: "Why is my hashrate wrong on the pool Dashboard?",
+        content: "Your hashrate is not wrong. Currently, we show your miners real-time hashrate. This is a limitation of the pool software and we are working on a fix that will show your hashrate average instead, which will more accurately reflect the hashrate you see displayed in your miner software. If you are ever in doubt, please rely on the hashrate displayed by your miner software."
     },    
     {
         title: "Coming Soon",

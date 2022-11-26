@@ -68,17 +68,16 @@ const ConnectPage: NextPage = () =>
                             title="Settings for Wild-Rig Multi:"
                         >
                             <code>
-                                wildrig.exe --algo evrprogpow --url stratum+tcp://evrpool.ninja:3333 --user ETX4pVHVb5jJRQ5wdN7GbuCiboTkQXg47s.WorkerName --pass x
+                                wildrig.exe --algo evrprogpow --url stratum+tcp://evrpool.ninja:3333 --user Wallet.Worker --pass x
                             </code>
                         </Card>
                     </Col>
                     <Col span={24}>
                         <Card
-                            title="Settings for T-Rex:"
+                            title="Settings for evrProgPowMiner:"
                         >
                             <code>
-                                evrprogpowminer.exe -P stratum+tcp://ENnxMojDXmJhLqKZg2q7NZh2piqXErx8PT
-                                .WorkerName@evrpool.ninja:3333
+                                evrprogpowminer.exe -P stratum+tcp://Wallet.Worker@evrpool.ninja:3333
                           </code>
                         </Card>
                     </Col>
@@ -103,8 +102,8 @@ const ConnectPage: NextPage = () =>
                                 size={24}
                                 style={{ alignItems: "center", width: "100%" }}
                             >
-                                {/* <img src="https://i.imgur.com/FXSlZNc.png" alt=""/>
-                                <img src="https://i.imgur.com/FXSlZNc.png" alt=""/> */}
+                                <img src="https://i.imgur.com/MRvpc20.png" alt="Settings for Wild-rig Multi HiveOS"/>
+                                <img src="https://i.imgur.com/erNsvAN.png" alt="Settings for SRBMiner Multi HiveOS"/>
                             </Space>
                         </Card>
                     </Col>

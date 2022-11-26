@@ -255,7 +255,7 @@ const HomePage = () =>
                 name: 'Dominance',
                 type: 'pie',
                 data: [
-                    { name: 'Network Hashrate', y: statistic?.network?.hashrate, color: '#DFAB80' },
+                    { name: 'Network Hash', y: statistic?.network?.hashrate, color: '#DFAB80' },
                     { name: 'Pool Hashrate', y: statistic?.hashrate?.shared, color: '#7E9EBC' },
                 ]
             }
@@ -441,7 +441,7 @@ const HomePage = () =>
                             <WithIcon icon="fa6-solid:person-digging">
                                 <Statistic
                                     // title="Pool Round Effort"
-                                    title={<Tooltip title="Effort is a measure of how many hashes our pool made to find a block. Please see FAQ for more info."color="cyan"><span>Round Effort</span></Tooltip>}
+                                    title={<Tooltip title="Effort is a measure of how many hashes our pool made to find a block. Please see FAQ for more info."color="cyan"><span>Pool Round Effort</span></Tooltip>}
                                     precision={2}
                                     value={
                                         statistic?.status?.effort

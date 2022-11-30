@@ -30,7 +30,7 @@ const MinersPage: NextPage = () =>
             {
                 return (
                     <Link
-                        href={`/dashboard/?miner=${i.miner}`}
+                        href={`/dashboard.html/?miner=${i.miner}`}
                     >
                         {i.miner} {i.effort && <Tag color="blue">Solo</Tag>}
                     </Link>
@@ -65,7 +65,7 @@ const MinersPage: NextPage = () =>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Container>
-                <h1 className="page-title">Active Miners</h1>
+                <h1 className="page-title">Top (active) Miners</h1>
                 <Table
                     columns={columns}
                     dataSource={shares}

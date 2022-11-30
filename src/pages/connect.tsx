@@ -78,7 +78,7 @@ const ConnectPage: NextPage = () =>
                         >
                             <code>
                                 evrprogpowminer.exe -P stratum+tcp://Wallet.Worker@evrpool.ninja:3333
-                          </code>
+                            </code>
                         </Card>
                     </Col>
                     {/* <Col span={24}>

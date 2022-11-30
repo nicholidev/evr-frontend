@@ -26,28 +26,28 @@ const Menus: any = ({ breakpoints, clickHandle, router }: any) =>
                     label: `Home`,
                 },
                 {
-                    key: "dashboard",
+                    key: "dashboard.html",
                     label: `Dashboard`,
                 },
 
                 {
-                    key: "miners",
+                    key: "miners.html",
                     label: `Miners`,
                 },
                 {
-                    key: "blocks",
+                    key: "blocks.html",
                     label: `Blocks`,
                 },
                 {
-                    key: "payments",
+                    key: "payments.html",
                     label: `Payments`,
                 },
                 {
-                    key: "connect",
+                    key: "connect.html",
                     label: `Connect`,
                 },
                 {
-                    key: "faq",
+                    key: "faq.html",
                     label: `Faq`,
                 },
                 {
@@ -133,7 +133,7 @@ const MainLayout: FC<Props> = (props) =>
                                 type="primary"
                                 size="large"
                                 className="social-button"
-                                href="https://discord.gg/hQNyqn3ksh"
+                                href="https://discord.gg/ZCzmChaDjX"
                                 target="_blank"
                             >
                                 <Icon icon="ic:baseline-discord"/>

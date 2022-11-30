@@ -15,7 +15,7 @@ export const getTimeFormat  = (time: string | number | Date) =>
 {
     const newTime =  new Date(time);
     let year: number | string   = newTime.getFullYear();
-    let month: number | string   = newTime.getMonth();
+    let month: number | string   = newTime.getMonth() + 1;
     let day: number | string     = newTime.getDate();
     let hour: number | string    = newTime.getHours();
     let minute: number | string  = newTime.getMinutes();

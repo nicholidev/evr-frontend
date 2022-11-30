@@ -135,7 +135,7 @@ const DashboardPage: NextPage = () =>
 
     const onSearch = (e: string) => 
     {
-        router.push(`/dashboard/?miner=${e}`)
+        router.push(`/dashboard.html/?miner=${e}`)
     }
 
     const searchHandle = (e: string) =>
@@ -228,7 +228,7 @@ const DashboardPage: NextPage = () =>
                                 block
                                 options={[
                                     {
-                                        label: "Shared",
+                                        label: "Pool",
                                         value: "shared"
                                     },
                                     {

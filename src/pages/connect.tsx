@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 
 const data = [
     {
+        // light: "noto:green-circle",
         flag: "openmoji:flag-us-outlying-islands",
         label: "Pool Mining - USA East Coast",
         value: "us-east.evrpool.ninja:3333"
@@ -39,12 +40,12 @@ const data = [
     {
         flag: "openmoji:flag-singapore",
         label: "Pool Mining - Asia",
-        value: "Coming Soon!"
+        value: "asia.evrpool.ninja:7070"
     },
     {
         flag: "openmoji:flag-singapore",
-        label: "Pool Mining - Asia",
-        value: "Coming Soon!"
+        label: "SOLO Mining - Asia",
+        value: "asia.evrpool.ninja:9090"
     }
 ];
 
@@ -75,14 +76,17 @@ const ConnectPage: NextPage = () =>
                                                 sm={{ span: 12 }}
                                             >
                                                 <h5 className="table-title" style={{ marginBottom: 0 }}>
+                                                    <Icon icon={item.light}/>
                                                     <Icon icon={item.flag}/>
                                                     {item.label}
                                                 </h5>
                                             </Col>
+
+
                                             <Col
                                                 span={24}
                                                 sm={{ span: 12 }}
-                                            >
+                                            > 
                                                 <p style={{ marginBottom: 0 }}>{item.value}</p>
                                             </Col>
                                         </Row>
@@ -91,10 +95,24 @@ const ConnectPage: NextPage = () =>
                             />
                         </Card>
                     </Col>
+
+
+                    {/* <Col span={24}>
+                        <Card
+                            title="How can I set static difficulty?"
+                        >   
+                            <code>
+                                Simply put d=0.15 in the password field of your miner software. Where x.xx is the difficulty value. 0.10
+                            </code>
+                        </Card>
+                    </Col> */}
+  
+
+
                     <Col span={24}>
                         <Card
                             title="Settings for Wild-Rig Multi:"
-                        >
+                        > 
                             <code>
                                 wildrig.exe --algo evrprogpow --url stratum+tcp://evrpool.ninja:3333 --user Wallet.Worker --pass x
                             </code>

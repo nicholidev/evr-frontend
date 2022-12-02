@@ -135,7 +135,7 @@ const DashboardPage: NextPage = () =>
 
     const onSearch = (e: string) => 
     {
-        router.push(`/dashboard.html/?miner=${e}`)
+        router.push(`/dashboard/?miner=${e}`)
     }
 
     const searchHandle = (e: string) =>

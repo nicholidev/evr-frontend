@@ -26,28 +26,28 @@ const Menus: any = ({ breakpoints, clickHandle, router }: any) =>
                     label: `Home`,
                 },
                 {
-                    key: "dashboard.html",
+                    key: "dashboard",
                     label: `Dashboard`,
                 },
 
                 {
-                    key: "miners.html",
+                    key: "miners",
                     label: `Miners`,
                 },
                 {
-                    key: "blocks.html",
+                    key: "blocks",
                     label: `Blocks`,
                 },
                 {
-                    key: "payments.html",
+                    key: "payments",
                     label: `Payments`,
                 },
                 {
-                    key: "connect.html",
+                    key: "connect",
                     label: `Connect`,
                 },
                 {
-                    key: "faq.html",
+                    key: "faq",
                     label: `Faq`,
                 },
                 {

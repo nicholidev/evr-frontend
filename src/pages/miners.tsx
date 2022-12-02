@@ -30,7 +30,7 @@ const MinersPage: NextPage = () =>
             {
                 return (
                     <Link
-                        href={`/dashboard.html/?miner=${i.miner}`}
+                        href={`/dashboard/?miner=${i.miner}`}
                     >
                         {i.miner} {i.effort && <Tag color="blue">Solo</Tag>}
                     </Link>

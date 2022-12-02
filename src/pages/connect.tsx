@@ -5,22 +5,38 @@ import { NextPage } from "next";
 import Head from "next/head";
 
 const data = [
-    // {
-    //     label: "Server",
-    //     value: "stratum.ravenpool.ninja"
-    // },
     {
-        label: "Pool Mining",
-        value: "evrpool.ninja:3333"
+        label: "Pool Mining - USA East Coast",
+        value: "us-east.evrpool.ninja:3333"
     },
     {
-        label: "SOLO Mining",
-        value: "evrpool.ninja:5555"
+        label: "SOLO Mining - USA East Coast",
+        value: "us-east.evrpool.ninja:5555"
     },
-    // {
-    //     label: "Stratum three",
-    //     value: "3333"
-    // },
+    {
+        label: "Pool Mining - USA West Coast",
+        value: "us-west.evrpool.ninja:3030"
+    },
+    {
+        label: "SOLO Mining - USA West Coast",
+        value: "us-west.evrpool.ninja:5050"
+    },
+    {
+        label: "Pool Mining - Europe",
+        value: "Coming Soon!"
+    },
+    {
+        label: "SOLO Mining - Europe",
+        value: "Coming Soon!"
+    },
+    {
+        label: "Pool Mining - Asia",
+        value: "Coming Soon!"
+    },
+    {
+        label: "Pool Mining - Asia",
+        value: "Coming Soon!"
+    }
 ];
 
 const ConnectPage: NextPage = () => 

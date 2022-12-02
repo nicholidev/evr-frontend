@@ -83,12 +83,13 @@ const HomePage = () =>
             {
                 name: 'Pool hashrate',
                 data: history.map((i) => i.hashrate.shared / 1000000000),
-                color: '#9DC8F1',
+                // color: '#9DC8F1',
+                color: '#53D8FF',
             },
             {
                 name: 'Solo hashrate',
                 data: history.map((i) => i.hashrate.solo / 1000000000),
-                color: '#F58282',
+                color: '#9DC8F1',
             }
         ]
 
@@ -96,6 +97,7 @@ const HomePage = () =>
 
     const chartOptions2 = {
         chart: {
+            type: 'line',
             height: breakpoints.xl ? 215 : 500,
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
@@ -140,6 +142,7 @@ const HomePage = () =>
 
     const chartOptions3 = {
         chart: {
+            type: 'area',
             height: breakpoints.xl ? 215 : 500,
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
@@ -180,6 +183,7 @@ const HomePage = () =>
 
     const chartOptions5 = {
         chart: {
+            type: 'area',
             height: breakpoints.xl ? 215 : 500,
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
@@ -255,8 +259,8 @@ const HomePage = () =>
                 name: 'Dominance',
                 type: 'pie',
                 data: [
-                    { name: 'Network Hash', y: statistic?.network?.hashrate, color: '#DFAB80' },
-                    { name: 'Pool Hashrate', y: statistic?.hashrate?.shared, color: '#7E9EBC' },
+                    { name: 'Network', y: statistic?.network?.hashrate, color: '#6590B9' },
+                    { name: 'Pool', y: statistic?.hashrate?.shared, color: '#8CFF98' },
                 ]
             }
         ]

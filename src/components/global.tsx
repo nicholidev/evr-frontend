@@ -156,8 +156,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .ant-card {
-    //border-radius: 10px; // Todo: Change border Radius and Box Shadow
-    //box-shadow: 1px 1px 8px #ffffff;
+    border-radius: 8px; // Todo: Change border Radius and Box Shadow
+    /* box-shadow: rgb(47,51,58) 0px 2px 4px; */
+    /* box-shadow: rgb(255, 255, 255) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px; */
     
     border: none;
     background-color: #1E1E1E;

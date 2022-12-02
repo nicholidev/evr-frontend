@@ -1,4 +1,4 @@
-import { Card, Col, Grid, Progress, Row, Segmented, Space, Statistic, Table, Tag } from "antd";
+import { Card, Col, Grid, Progress, Row, Segmented, Space, Statistic, Switch, Table, Tag } from "antd";
 import { blocksApi, luckApi, validBlocksApi } from "api";
 import Container from "components/container";
 import MainLayout from "layouts";
@@ -11,7 +11,7 @@ import WithIcon from "components/with-icon";
 const { useBreakpoint } = Grid;
 
 
-const BlocksPage: NextPage = () => 
+const BlocksPage: NextPage = () =>
 {
     const breakpoints = useBreakpoint();
 
@@ -29,26 +29,30 @@ const BlocksPage: NextPage = () =>
 
     const [current, setCurrent] = useState<"confirmed" | "pending" | "kicked">("confirmed");
 
+    const [t, setT] = useState(60);
 
-    useEffect(() => 
+    const [refresh, setRefresh] = useState<boolean>(false);
+
+
+    const getHandle = () =>
     {
         blocksApi()
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 const dat = data?.body?.primary;
-                setConfirmed(dat?.confirmed?.map((i: any) => 
+                setConfirmed(dat?.confirmed?.map((i: any) =>
                 {
                     i.key = i.transaction;
                     i.percent = 100;
                     return i
                 }));
-                setKicked(dat?.kicked?.map((i: any) => 
+                setKicked(dat?.kicked?.map((i: any) =>
                 {
                     i.key = i.transaction;
                     i.percent = "kicked";
                     return i
                 }));
-                setPending(dat?.pending?.map((i: any) => 
+                setPending(dat?.pending?.map((i: any) =>
                 {
                     i.key = i.transaction;
                     return i
@@ -57,21 +61,49 @@ const BlocksPage: NextPage = () =>
             .catch(e => console.log(e))
 
         luckApi()
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 setLuck(data?.body?.primary?.status?.luck)
             })
             .catch(e => console.log(e))
 
         validBlocksApi()
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 setBlocks(data?.body?.primary?.blocks)
                 setNetwork(data?.body?.primary?.network)
             })
             .catch(e => console.log(e))
+    }
+
+
+    useEffect(() =>
+    {
+        getHandle();
     }, [])
 
+    useEffect(() =>
+    {
+        if (refresh)
+        {
+            const interval = setInterval(() =>
+            {
+                setT(t-1)
+            }, 1000);
+
+            if (t<1)
+            {
+                getHandle();
+                setT(60)
+            }
+            return () => clearInterval(interval);
+
+        }
+        else
+        {
+            setT(30)
+        }
+    }, [t, refresh])
 
     const columns: any[] = [
         {
@@ -101,7 +133,7 @@ const BlocksPage: NextPage = () =>
         {
             title: 'Worker',
             align: "left",
-            render: (row: any) => 
+            render: (row: any) =>
             {
                 return (
                     <Space>
@@ -112,6 +144,10 @@ const BlocksPage: NextPage = () =>
                     </Space>
                 )
             },
+        },
+        {
+            title: 'Server',
+            dataIndex: 'identifier',
         },
         {
             title: 'Luck',
@@ -181,6 +217,19 @@ const BlocksPage: NextPage = () =>
                 <Row
                     gutter={[24, 24]}
                 >
+                    <Col span={24}>
+                        <div
+                            className="refresh-area"
+                        >
+                            {
+                                refresh ? `${t}s` : "Page Refresh"
+                            }
+                            <Switch
+                                checked={refresh}
+                                onChange={(e)=>{setRefresh(e); setT(60)}}
+                            />
+                        </div>
+                    </Col>
                     <Col
                         span={24}
                         lg={{ span: 8 }}
@@ -237,7 +286,7 @@ const BlocksPage: NextPage = () =>
                                 block
                                 size="large"
                                 value={current}
-                                onChange={(e: any) => 
+                                onChange={(e: any) =>
                                 {
                                     setCurrent(e)
                                 }}

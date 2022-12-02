@@ -1,4 +1,4 @@
-import { Card, Col, Grid, Input, message, Row, Segmented, Statistic, Table, Tooltip } from "antd";
+import { Card, Col, Grid, Input, message, Row, Segmented, Statistic, Switch, Table, Tooltip } from "antd";
 import Container from "components/container";
 import MainLayout from "layouts";
 import { NextPage } from "next";
@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 const { Search } = Input;
 const { useBreakpoint } = Grid;
 
-const DashboardPage: NextPage = () => 
+const DashboardPage: NextPage = () =>
 {
     const { query }: any = useRouter();
 
@@ -26,6 +26,8 @@ const DashboardPage: NextPage = () =>
     const [activeSolos, setActiveSolos] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [pool, setPool] = useState<any>({});
+    const [refresh, setRefresh] = useState<boolean>(false);
+    const [t, setT] = useState<number>(60);
 
     const columns: any[] = [
         {
@@ -35,7 +37,7 @@ const DashboardPage: NextPage = () =>
         {
             title: "Worker Hashrate",
             align: "center",
-            render: (i: any) => 
+            render: (i: any) =>
             {
                 return (
                     <span>
@@ -71,16 +73,16 @@ const DashboardPage: NextPage = () =>
     ];
 
 
-    const loadSharedData = async (w: string) => 
+    const loadSharedData = async (w: string) =>
     {
         return minersApi(w)
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 console.log(data?.body?.primary?.workers?.shared?.length)
-                if (data?.body?.primary?.workers?.shared?.length > 0) 
+                if (data?.body?.primary?.workers?.shared?.length > 0)
                 {
                     return Promise.all(
-                        data?.body?.primary?.workers?.shared?.map(async (m: any, index: number) => 
+                        data?.body?.primary?.workers?.shared?.map(async (m: any, index: number) =>
                         {
                             const w = await workersApi(m);
                             return {
@@ -92,7 +94,7 @@ const DashboardPage: NextPage = () =>
                         })
                     )
                 }
-                else 
+                else
                 {
                     return []
                 }
@@ -100,20 +102,20 @@ const DashboardPage: NextPage = () =>
             .catch(e => console.log(e))
     }
 
-    const loadSoloData = async (w: string) => 
+    const loadSoloData = async (w: string) =>
     {
         return minersApi(w)
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 setMiner({
                     ...data?.body?.primary,
                     miner: w
                 })
                 console.log(data?.body?.primary?.workers?.solo?.length)
-                if (data?.body?.primary?.workers?.solo?.length > 0) 
+                if (data?.body?.primary?.workers?.solo?.length > 0)
                 {
                     return Promise.all(
-                        data?.body?.primary?.workers?.solo?.map(async (m: any, index: number) => 
+                        data?.body?.primary?.workers?.solo?.map(async (m: any, index: number) =>
                         {
                             const w = await workersApi(m);
                             return {
@@ -125,7 +127,7 @@ const DashboardPage: NextPage = () =>
                         })
                     )
                 }
-                else 
+                else
                 {
                     return []
                 }
@@ -133,7 +135,7 @@ const DashboardPage: NextPage = () =>
             .catch(e => console.log(e))
     }
 
-    const onSearch = (e: string) => 
+    const onSearch = (e: string) =>
     {
         router.push(`/dashboard/?miner=${e}`)
     }
@@ -164,37 +166,56 @@ const DashboardPage: NextPage = () =>
             .finally(() => setLoading(false))
     }
 
-    useEffect(() => 
+    const getHandle = () =>
     {
+        searchHandle(query.miner);
         validBlocksApi()
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 setPool(data?.body?.primary);
             })
             .catch(e => console.log(e))
         allMinersApi()
-            .then(({ data }) => 
+            .then(({ data }) =>
             {
                 setActiveSolos(data.body?.primary?.solo)
             })
+        // message.success({
+        //     content: 'The page was refreshed',
+        // }).then(() => {console.log("")});
+    }
+
+    useEffect(() =>
+    {
+        getHandle()
     }, [])
 
-    useEffect(() => 
-    {
-        if (query?.miner) 
-        {
-            searchHandle(query.miner);
-            const interval = setInterval(() =>
-            {
-                searchHandle(query.miner);
-                message.success({
-                    content: 'The page was refreshed',
-                }).then(() => {console.log("")});
-            }, 30000);
 
-            return () => clearInterval(interval);
+    useEffect(() =>
+    {
+        if (query?.miner)
+        {
+            if (refresh)
+            {
+                const interval = setInterval(() =>
+                {
+                    setT(t-1)
+                }, 1000);
+
+                if (t<1)
+                {
+                    getHandle();
+                    setT(60)
+                }
+                return () => clearInterval(interval);
+
+            }
+            else
+            {
+                setT(30)
+            }
         }
-    }, [query])
+    }, [query, t, refresh])
 
 
     return (
@@ -208,7 +229,19 @@ const DashboardPage: NextPage = () =>
                 <Row
                     gutter={[24, 24]}
                 >
-
+                    <Col span={24}>
+                        <div
+                            className="refresh-area"
+                        >
+                            {
+                                refresh ? `${t}s` : "Page Refresh"
+                            }
+                            <Switch
+                                checked={refresh}
+                                onChange={(e)=>{setRefresh(e); setT(60)}}
+                            />
+                        </div>
+                    </Col>
                     <Col span={24}>
                         <Card>
                             <Search

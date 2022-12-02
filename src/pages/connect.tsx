@@ -3,43 +3,52 @@ import Container from "components/container";
 import MainLayout from "layouts";
 import { NextPage } from "next";
 import Head from "next/head";
+import { Icon } from "@iconify/react";
 
 const data = [
     {
+        flag: "openmoji:flag-us-outlying-islands",
         label: "Pool Mining - USA East Coast",
         value: "us-east.evrpool.ninja:3333"
     },
     {
+        flag: "openmoji:flag-us-outlying-islands",
         label: "SOLO Mining - USA East Coast",
         value: "us-east.evrpool.ninja:5555"
     },
     {
+        flag: "openmoji:flag-us-outlying-islands",
         label: "Pool Mining - USA West Coast",
         value: "us-west.evrpool.ninja:3030"
     },
     {
+        flag: "openmoji:flag-us-outlying-islands",
         label: "SOLO Mining - USA West Coast",
         value: "us-west.evrpool.ninja:5050"
     },
     {
+        flag: "openmoji:flag-germany",
         label: "Pool Mining - Europe",
         value: "Coming Soon!"
     },
     {
+        flag: "openmoji:flag-germany",
         label: "SOLO Mining - Europe",
         value: "Coming Soon!"
     },
     {
+        flag: "openmoji:flag-singapore",
         label: "Pool Mining - Asia",
         value: "Coming Soon!"
     },
     {
+        flag: "openmoji:flag-singapore",
         label: "Pool Mining - Asia",
         value: "Coming Soon!"
     }
 ];
 
-const ConnectPage: NextPage = () => 
+const ConnectPage: NextPage = () =>
 {
     return (
         <MainLayout>
@@ -65,7 +74,10 @@ const ConnectPage: NextPage = () =>
                                                 span={24}
                                                 sm={{ span: 12 }}
                                             >
-                                                <h5 style={{ marginBottom: 0 }}>{item.label}</h5>
+                                                <h5 className="table-title" style={{ marginBottom: 0 }}>
+                                                    <Icon icon={item.flag}/>
+                                                    {item.label}
+                                                </h5>
                                             </Col>
                                             <Col
                                                 span={24}

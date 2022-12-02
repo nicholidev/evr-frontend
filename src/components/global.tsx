@@ -156,7 +156,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .ant-card {
-    border-radius: 0;
+    //border-radius: 10px; // Todo: Change border Radius and Box Shadow
+    //box-shadow: 1px 1px 8px #ffffff;
+    
     border: none;
     background-color: #1E1E1E;
 
@@ -608,7 +610,32 @@ const GlobalStyle = createGlobalStyle`
 }
 
 
+.refresh-area{
+  color: #ffffff;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  grid-gap: 8px;
+  font-weight: 700;
+  .ant-switch{
+      background-color: #6E7C8C;
+    &.ant-switch-checked {
+      background-color: #84BF40;
+    }
+  }
+}
 
+.table-title{
+  display: flex;
+  align-items: center;
+  
+  svg {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+  }
+}
 `
 
 

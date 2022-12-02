@@ -1,4 +1,4 @@
-import { Card, Col, Grid, message, Row, Space, Statistic, Tooltip } from 'antd'
+import { Card, Col, Grid, Row, Space, Statistic, Switch, Tooltip } from 'antd'
 import Head from 'next/head'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -14,7 +14,7 @@ import WithIcon from "../components/with-icon";
 const { useBreakpoint } = Grid;
 
 
-const HomePage = () => 
+const HomePage = () =>
 {
     const breakpoints = useBreakpoint();
 
@@ -22,7 +22,9 @@ const HomePage = () =>
 
     const [history, setHistory] = useState<any[]>([])
 
-    const [t, setT] = useState(30);
+    const [t, setT] = useState(60);
+
+    const [refresh, setRefresh] = useState<boolean>(false);
 
     const chartOptions = {
         chart: {
@@ -50,7 +52,7 @@ const HomePage = () =>
                 text: ''
             },
             labels: {
-                formatter: (e: any) => 
+                formatter: (e: any) =>
                 {
                     return e.value + 'GH/s';
                 },
@@ -124,7 +126,7 @@ const HomePage = () =>
             },
 
             labels: {
-                formatter: (e: any) => 
+                formatter: (e: any) =>
                 {
                     return e.value / 1000 + 'k';
                 },
@@ -147,7 +149,7 @@ const HomePage = () =>
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: 'Pool Miners',
+            text: `Pool Miners (${history[history.length-1]?.status.miners})`,
             style: {
                 color: '#ffffff',
                 fontWeight: 'bold'
@@ -188,7 +190,7 @@ const HomePage = () =>
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
         title: {
-            text: 'Pool Workers',
+            text: `Pool Workers (${history[history.length-1]?.status.workers})`,
             style: {
                 color: '#ffffff',
                 fontWeight: 'bold'
@@ -232,8 +234,8 @@ const HomePage = () =>
             height: breakpoints.xl ? 215 : 500,
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
         },
-        title: {            
-            text: 'Network Dominance',            
+        title: {
+            text: 'Network Dominance',
             style: {
                 color: '#ffffff',
                 fontWeight: 'bold'
@@ -267,7 +269,7 @@ const HomePage = () =>
     }
 
 
-    useEffect(() => 
+    useEffect(() =>
     {
         statisticApi()
             .then(({ data }) =>
@@ -283,29 +285,45 @@ const HomePage = () =>
             .catch(e => console.log(e))
     }, [])
 
-    useEffect(() => 
+    const getHandle = () =>
     {
-        const interval = setInterval(() =>
-        {
-            statisticApi()
-                .then(({ data }) =>
-                {
-                    setStatistic(data?.body?.primary);
-                    message.success({
-                        content: 'The page was refreshed',
-                    }).then(() => {console.log("")});
-                })
-                .catch(e => console.log(e))
-            historicalApi()
-                .then(({ data }) =>
-                {
-                    setHistory(data?.body?.primary)
-                })
-                .catch(e => console.log(e))
-        }, 30000);
+        statisticApi()
+            .then(({ data }) =>
+            {
+                setStatistic(data?.body?.primary);
+            })
+            .catch(e => console.log(e))
+        historicalApi()
+            .then(({ data }) =>
+            {
+                setHistory(data?.body?.primary)
+            })
+            .catch(e => console.log(e))
+        setT(60);
+    }
 
-        return () => clearInterval(interval);
-    }, [])
+    useEffect(() =>
+    {
+        if (refresh)
+        {
+            const interval = setInterval(() =>
+            {
+                setT(t-1)
+            }, 1000);
+
+            if (t<1)
+            {
+                getHandle();
+                setT(60)
+            }
+            return () => clearInterval(interval);
+
+        }
+        else
+        {
+            setT(30)
+        }
+    }, [t, refresh])
 
 
     return (
@@ -320,6 +338,19 @@ const HomePage = () =>
                 <Row
                     gutter={[24, 24]}
                 >
+                    <Col span={24}>
+                        <div
+                            className="refresh-area"
+                        >
+                            {
+                                refresh ? `${t}s` : "Page Refresh"
+                            }
+                            <Switch
+                                checked={refresh}
+                                onChange={(e)=>{setRefresh(e); setT(60)}}
+                            />
+                        </div>
+                    </Col>
                     <Col
                         span={24}
                         xl={{ span: 12 }}

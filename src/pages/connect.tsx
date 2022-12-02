@@ -76,7 +76,6 @@ const ConnectPage: NextPage = () =>
                                                 sm={{ span: 12 }}
                                             >
                                                 <h5 className="table-title" style={{ marginBottom: 0 }}>
-                                                    <Icon icon={item.light}/>
                                                     <Icon icon={item.flag}/>
                                                     {item.label}
                                                 </h5>

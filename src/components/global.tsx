@@ -309,6 +309,10 @@ const GlobalStyle = createGlobalStyle`
 
             p {
               font-size: 12px;
+              img {
+                width: auto;
+                height: auto;
+              }
             }
           }
         }
@@ -350,6 +354,10 @@ const GlobalStyle = createGlobalStyle`
 
             p {
               font-size: 12px;
+              img {
+                width: auto;
+                height: auto;
+              }
             }
           }
         }
@@ -637,6 +645,18 @@ const GlobalStyle = createGlobalStyle`
     margin-right: 8px;
   }
 }
+
+.copy-link {
+  background: rgb(49 132 157);
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color: #f0f0f0;
+}
+
 `
 
 

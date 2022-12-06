@@ -210,6 +210,13 @@ const MainLayout: FC<Props> = (props) =>
                                 <p>
                                     EVRmore Coin Mining Pool + SOLO Mining
                                 </p>
+                                <p>
+                                    Fully compatible with
+                                    
+                                    <a href="https://www.miningrigrentals.com/register?ref=2697341" target="_blank"> 
+                                        <img src="/mrr-logo-no-padding.png" alt="Mining Rig Rentals" />
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </Col>

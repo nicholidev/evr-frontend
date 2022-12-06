@@ -1,4 +1,4 @@
-import { Card, Col, List, Row, Space } from "antd";
+import { Card, Col, List, message, Row, Space, Tooltip } from "antd";
 import Container from "components/container";
 import MainLayout from "layouts";
 import { NextPage } from "next";
@@ -7,7 +7,7 @@ import { Icon } from "@iconify/react";
 
 const data = [
     {
-        // light: "noto:green-circle",
+        light: "noto:green-circle",
         flag: "openmoji:flag-us-outlying-islands",
         label: "Pool Mining - USA East Coast",
         value: "us-east.evrpool.ninja:3333"
@@ -86,7 +86,27 @@ const ConnectPage: NextPage = () =>
                                                 span={24}
                                                 sm={{ span: 12 }}
                                             > 
-                                                <p style={{ marginBottom: 0 }}>{item.value}</p>
+                                                <p style={{ marginBottom: 0, display: "inline-flex", alignItems: "center", gridGap: 4 }}>
+                                                    {item.value}
+                                                    <Tooltip
+                                                        title="Copy to clipboard"
+                                                        color="cyan"
+                                                    >
+                                                        <a 
+                                                            className="copy-link"
+                                                            onClick={()=>{
+                                                                navigator.clipboard.writeText(item.value);
+                                                                message.success({
+                                                                    content: 'Copied to clipboard!',
+                                                                    style: {
+                                                                    },
+                                                                });
+                                                            }}
+                                                        >
+                                                            <Icon icon="ion:copy-outline"/>
+                                                        </a>
+                                                    </Tooltip>
+                                                </p>
                                             </Col>
                                         </Row>
                                     </List.Item>
@@ -96,15 +116,15 @@ const ConnectPage: NextPage = () =>
                     </Col>
 
 
-                    {/* <Col span={24}>
+                    <Col span={24}>
                         <Card
                             title="How can I set static difficulty?"
                         >   
-                            <code>
+                            <p style={{color: "#f0f0f0", fontSize: 18}}>
                                 Simply put d=0.15 in the password field of your miner software. Where x.xx is the difficulty value. 0.10
-                            </code>
+                            </p>
                         </Card>
-                    </Col> */}
+                    </Col>
   
 
 

@@ -49,14 +49,14 @@ const data = [
     }
 ];
 
-const ConnectPage: NextPage = () =>
+const ConnectPage: NextPage = () => 
 {
     return (
         <MainLayout>
             <Head>
                 <title>Connect</title>
-                <meta name="description" content="EVRpool.ninja | Connect"/>
-                <link rel="icon" href="/favicon.ico"/>
+                <meta name="description" content="EVRpool.ninja | Connect" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
             <Container>
                 <h1 className="page-title">Get Connected</h1>
@@ -76,7 +76,7 @@ const ConnectPage: NextPage = () =>
                                                 sm={{ span: 12 }}
                                             >
                                                 <h5 className="table-title" style={{ marginBottom: 0 }}>
-                                                    <Icon icon={item.flag}/>
+                                                    <Icon icon={item.flag} />
                                                     {item.label}
                                                 </h5>
                                             </Col>
@@ -85,16 +85,17 @@ const ConnectPage: NextPage = () =>
                                             <Col
                                                 span={24}
                                                 sm={{ span: 12 }}
-                                            > 
+                                            >
                                                 <p style={{ marginBottom: 0, display: "inline-flex", alignItems: "center", gridGap: 4 }}>
                                                     {item.value}
                                                     <Tooltip
                                                         title="Copy to clipboard"
                                                         color="cyan"
                                                     >
-                                                        <a 
+                                                        <a
                                                             className="copy-link"
-                                                            onClick={()=>{
+                                                            onClick={() => 
+                                                            {
                                                                 navigator.clipboard.writeText(item.value);
                                                                 message.success({
                                                                     content: 'Copied to clipboard!',
@@ -103,7 +104,7 @@ const ConnectPage: NextPage = () =>
                                                                 });
                                                             }}
                                                         >
-                                                            <Icon icon="ion:copy-outline"/>
+                                                            <Icon icon="ion:copy-outline" />
                                                         </a>
                                                     </Tooltip>
                                                 </p>
@@ -119,19 +120,19 @@ const ConnectPage: NextPage = () =>
                     <Col span={24}>
                         <Card
                             title="How can I set static difficulty?"
-                        >   
+                        >
                             <p style={{ color: "#f0f0f0", fontSize: 18 }}>
                                 Simply put d=0.15 in the password field of your miner software. Where x.xx is the difficulty value. 0.10
                             </p>
                         </Card>
                     </Col>
-  
+
 
 
                     <Col span={24}>
                         <Card
                             title="Settings for Wild-Rig Multi:"
-                        > 
+                        >
                             <code>
                                 wildrig.exe --algo evrprogpow --url stratum+tcp://evrpool.ninja:3333 --user Wallet.Worker --pass x
                             </code>
@@ -167,8 +168,8 @@ const ConnectPage: NextPage = () =>
                                 size={24}
                                 style={{ alignItems: "center", width: "100%" }}
                             >
-                                <img src="https://i.imgur.com/MRvpc20.png" alt="Settings for Wild-rig Multi HiveOS"/>
-                                <img src="https://i.imgur.com/erNsvAN.png" alt="Settings for SRBMiner Multi HiveOS"/>
+                                <img src="https://i.imgur.com/MRvpc20.png" alt="Settings for Wild-rig Multi HiveOS" />
+                                <img src="https://i.imgur.com/erNsvAN.png" alt="Settings for SRBMiner Multi HiveOS" />
                             </Space>
                         </Card>
                     </Col>

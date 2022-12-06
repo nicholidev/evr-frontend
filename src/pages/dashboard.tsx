@@ -188,7 +188,7 @@ const DashboardPage: NextPage = () =>
     useEffect(() =>
     {
         getHandle()
-    }, [])
+    }, [query])
 
 
     useEffect(() =>

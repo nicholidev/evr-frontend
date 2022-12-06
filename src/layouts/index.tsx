@@ -213,7 +213,7 @@ const MainLayout: FC<Props> = (props) =>
                                 <p>
                                     Fully compatible with
                                     
-                                    <a href="https://www.miningrigrentals.com/register?ref=2697341" target="_blank"> 
+                                    <a href="https://www.miningrigrentals.com/register?ref=2697341" target="_blank" rel="noreferrer" > 
                                         <img src="/mrr-logo-no-padding.png" alt="Mining Rig Rentals" />
                                     </a>
                                 </p>
@@ -230,8 +230,6 @@ const MainLayout: FC<Props> = (props) =>
                                         navigator.clipboard.writeText("EdKzRvrSYTPDVvR3eadfhTQNVbQxsUnMGk");
                                         message.success({
                                             content: 'The donation address was copied to your clipboard!',
-                                            style: {
-                                            },
                                         });
                                     }}
                                 >

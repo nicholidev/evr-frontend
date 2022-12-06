@@ -120,7 +120,7 @@ const ConnectPage: NextPage = () =>
                         <Card
                             title="How can I set static difficulty?"
                         >   
-                            <p style={{color: "#f0f0f0", fontSize: 18}}>
+                            <p style={{ color: "#f0f0f0", fontSize: 18 }}>
                                 Simply put d=0.15 in the password field of your miner software. Where x.xx is the difficulty value. 0.10
                             </p>
                         </Card>

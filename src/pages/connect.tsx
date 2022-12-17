@@ -49,7 +49,7 @@ const data = [
     }
 ];
 
-const ConnectPage: NextPage = () => 
+const ConnectPage: NextPage = () =>
 {
     return (
         <MainLayout>
@@ -94,7 +94,7 @@ const ConnectPage: NextPage = () =>
                                                     >
                                                         <a
                                                             className="copy-link"
-                                                            onClick={() => 
+                                                            onClick={() =>
                                                             {
                                                                 navigator.clipboard.writeText(item.value);
                                                                 message.success({
@@ -132,6 +132,7 @@ const ConnectPage: NextPage = () =>
                     <Col span={24}>
                         <Card
                             title="Settings for Wild-Rig Multi:"
+                            className="scrollable"
                         >
                             <code>
                                 wildrig.exe --algo evrprogpow --url stratum+tcp://evrpool.ninja:3333 --user Wallet.Worker --pass x
@@ -141,6 +142,7 @@ const ConnectPage: NextPage = () =>
                     <Col span={24}>
                         <Card
                             title="Settings for evrProgPowMiner:"
+                            className="scrollable"
                         >
                             <code>
                                 evrprogpowminer.exe -P stratum+tcp://Wallet.Worker@evrpool.ninja:3333

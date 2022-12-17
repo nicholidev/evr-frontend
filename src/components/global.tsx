@@ -171,13 +171,19 @@ const GlobalStyle = createGlobalStyle`
         font-size: 20px;
       }
     }
-
+    &.scrollable {
+      .ant-card-body {
+        overflow-x: auto;
+      }
+    }
     .ant-card-body {
+      
       code {
         color: #ffffff;
         background-color: #181818;
         padding: 4px 12px;
         border-radius: 4px;
+        white-space: nowrap;
       }
     }
   }

@@ -8,6 +8,7 @@ import { hashRateFormat } from "utils/unit.helper";
 import Head from "next/head";
 import WithIcon from "../components/with-icon";
 import { useRouter } from "next/router";
+import { getHoursMinutes } from "../utils/time.helper";
 
 
 const { Search } = Input;
@@ -218,6 +219,9 @@ const DashboardPage: NextPage = () =>
     }, [query, t, refresh])
 
 
+    console.log(pool, "POOL")
+    console.log(miner, "MINER")
+
     return (
         <MainLayout>
             <Head>
@@ -312,7 +316,7 @@ const DashboardPage: NextPage = () =>
                     </Col>
                     <Col
                         span={24}
-                        lg={{ span: 8 }}
+                        lg={{ span: 6 }}
                     >
                         <Card>
                             <WithIcon icon="fa6-regular:hourglass-half">
@@ -329,7 +333,7 @@ const DashboardPage: NextPage = () =>
                     </Col>
                     <Col
                         span={24}
-                        lg={{ span: 8 }}
+                        lg={{ span: 6 }}
                     >
                         <Card>
                             <WithIcon icon="fa6-solid:sack-dollar">
@@ -348,7 +352,7 @@ const DashboardPage: NextPage = () =>
                         current !== 'solo' ? (
                             <Col
                                 span={24}
-                                lg={{ span: 8 }}
+                                lg={{ span: 6 }}
                             >
                                 <Card>
                                     <WithIcon icon="fa6-solid:magnifying-glass-dollar">
@@ -367,7 +371,7 @@ const DashboardPage: NextPage = () =>
                         ) : (
                             <Col
                                 span={24}
-                                lg={{ span: 8 }}
+                                lg={{ span: 6 }}
                             >
                                 <Card>
                                     <WithIcon icon="fa6-solid:person-digging">
@@ -381,6 +385,49 @@ const DashboardPage: NextPage = () =>
                                             suffix="%"
                                         />
                                     </WithIcon>
+                                </Card>
+                            </Col>
+                        )
+                    }
+
+                    {
+                        current !== 'solo' ? (
+                            <Col
+                                span={24}
+                                lg={{ span: 6 }}
+                            >
+                                <Card>
+                                    <WithIcon icon="fa6-solid:hourglass-start">
+                                        <Statistic
+                                            // title="Pool TTF"
+                                            title={<Tooltip title="Tooltip" color="cyan"><span>Payment Interval</span></Tooltip>}
+                                            value={
+                                                10
+                                                // getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
+                                            }
+                                            suffix="MINS"
+                                            valueStyle={{ color: '#3f8600' }}
+                                        />
+                                    </WithIcon>
+
+                                </Card>
+                            </Col>
+                        ) : (
+                            <Col
+                                span={24}
+                                lg={{ span: 6 }}
+                            >
+                                <Card>
+                                    <WithIcon icon="fa6-solid:clock">
+                                        <Statistic
+                                            title={<Tooltip title="How long until the pool solves the next block, presuming 100% Effort." color="cyan"><span>TTF </span></Tooltip>}
+                                            value={
+                                                getHoursMinutes((pool?.network?.hashrate / miner?.hashrate?.solo) * 60 || 0)
+                                            }
+                                            valueStyle={{ color: '#3f8600' }}
+                                        />
+                                    </WithIcon>
+
                                 </Card>
                             </Col>
                         )

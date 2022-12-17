@@ -15,7 +15,7 @@ const data = [
     {
         flag: "openmoji:flag-us-outlying-islands",
         label: "SOLO Mining - USA East Coast",
-        value: "us-east.evrpool.ninja:5555"
+        value: "solo.us-east.evrpool.ninja:5555"
     },
     {
         flag: "openmoji:flag-us-outlying-islands",
@@ -25,7 +25,7 @@ const data = [
     {
         flag: "openmoji:flag-us-outlying-islands",
         label: "SOLO Mining - USA West Coast",
-        value: "us-west.evrpool.ninja:5050"
+        value: "solo.us-west.evrpool.ninja:5050"
     },
     {
         flag: "openmoji:flag-germany",
@@ -45,7 +45,7 @@ const data = [
     {
         flag: "openmoji:flag-singapore",
         label: "SOLO Mining - Asia",
-        value: "asia.evrpool.ninja:9090"
+        value: "solo.asia.evrpool.ninja:9090"
     }
 ];
 

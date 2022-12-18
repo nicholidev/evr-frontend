@@ -222,7 +222,7 @@ const BlocksPage: NextPage = () =>
                             className="refresh-area"
                         >
                             {
-                                refresh ? `${t}s` : "Page Refresh"
+                                refresh ? `${t}s` : "Auto Refresh"
                             }
                             <Switch
                                 checked={refresh}

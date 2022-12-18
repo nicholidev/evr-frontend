@@ -30,12 +30,12 @@ const data = [
     {
         flag: "openmoji:flag-germany",
         label: "Pool Mining - Europe",
-        value: "Coming Soon!"
+        value: "eu.evrpool.ninja:4040"
     },
     {
         flag: "openmoji:flag-germany",
         label: "SOLO Mining - Europe",
-        value: "Coming Soon!"
+        value: "solo.eu.evrpool.ninja:6060"
     },
     {
         flag: "openmoji:flag-singapore",
@@ -122,7 +122,7 @@ const ConnectPage: NextPage = () =>
                             title="How can I set static difficulty?"
                         >
                             <p style={{ color: "#f0f0f0", fontSize: 18 }}>
-                                Simply put d=0.15 in the password field of your miner software. Where x.xx is the difficulty value. 0.10
+                             Simply put <code>d=0.XX</code> in the password field of your miner software. Where <code>XX</code> is the difficulty value. For a single-gpu miner with 20 - 25 Mh/s <code>d=0.15</code> seems to be a good number. Unless you only have 1-2 GPU's there is no need to adjust thing number, unless you 100% know what you are doing. If you need advice please jump into our <a href="https://discord.gg/ZCzmChaDjX" target="_blank" rel="noreferrer" >Discord Server.</a>
                             </p>
                         </Card>
                     </Col>
@@ -135,7 +135,7 @@ const ConnectPage: NextPage = () =>
                             className="scrollable"
                         >
                             <code>
-                                wildrig.exe --algo evrprogpow --url stratum+tcp://evrpool.ninja:3333 --user Wallet.Worker --pass x
+                                wildrig.exe --algo evrprogpow --url stratum+tcp://us-east.evrpool.ninja:3333 --user WalletAddress.WorkerName --pass x
                             </code>
                         </Card>
                     </Col>
@@ -145,7 +145,7 @@ const ConnectPage: NextPage = () =>
                             className="scrollable"
                         >
                             <code>
-                                evrprogpowminer.exe -P stratum+tcp://Wallet.Worker@evrpool.ninja:3333
+                                evrprogpowminer.exe -P stratum+tcp://WalletAddress.WorkerName@us-east.evrpool.ninja:3333
                             </code>
                         </Card>
                     </Col>

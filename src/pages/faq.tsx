@@ -17,6 +17,10 @@ const data = [
         content: "Yes! Just remember, you'll need to connect your rig to port 5555 for SOLO mining."
     },
     {
+        title: "What is Mining Luck?",
+        content: "Mining is probabilistic by nature: if you solve a block earlier than you statistically should on average, you are lucky if it takes longer, you are unlucky. Less then 100% means lucky. More then 100% signifies it took longer than it statistically should on average aka unlucky. Over a long period of time or many blocks, a pool or SOLO miner's Luck will always average around 100%. In the short-term, like block to block or day to day, Luck can average dramatically. Imagine you flip a coin 10 times. You might get 7 heads and 3 tails, and conclude there is a 70% chance of getting heads when you flip a coin. But even small children know that the probability of heads or tails on a coin toss is 50/50. If you do this coin toss 1,000 or 10,000 times you will get 50% heads, 50% tails nearly 100% of the time. Mining Luck works almost the same. Over any large amount of blocks or time, Pool Luck and SOLO Luck will average about 100%. So what does this mean? It means there is no point in leaving a pool during round of poor Luck because they will be followed by rounds of good Luck. It also means that long-term, SOLO mining or POOL mining your Luck will be about the same. So instead of wasting time thinking so much about these things, help support the security of the Network by choosing small pools like THIS ONE that helps to distribute the network hashrate. Avoid large pools at all cost who control majority of network hashrate like 2Miners, Rplant, etc."
+    },
+    {
         title: "Does EVRpool.ninja support static mining difficulty?",
         content: "Yes, we do. Just enter d=x.xx in the PASSWORD field of your miner software; where x.xx equals the share difficulty you want. Example: d=0.1 - For more examples please see the Connect page."
     },

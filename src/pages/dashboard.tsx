@@ -238,7 +238,7 @@ const DashboardPage: NextPage = () =>
                             className="refresh-area"
                         >
                             {
-                                refresh ? `${t}s` : "Page Refresh"
+                                refresh ? `${t}s` : "Auto Refresh"
                             }
                             <Switch
                                 checked={refresh}
@@ -400,7 +400,7 @@ const DashboardPage: NextPage = () =>
                                     <WithIcon icon="fa6-solid:hourglass-start">
                                         <Statistic
                                             // title="Pool TTF"
-                                            title={<Tooltip title="Tooltip" color="cyan"><span>Payment Interval</span></Tooltip>}
+                                            title={<Tooltip title="Once a block is confirmed, payments are sent every 10 minutes from the pool to miners and solo miners." color="cyan"><span>Payment Interval</span></Tooltip>}
                                             value={
                                                 10
                                                 // getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
@@ -420,7 +420,7 @@ const DashboardPage: NextPage = () =>
                                 <Card>
                                     <WithIcon icon="fa6-solid:clock">
                                         <Statistic
-                                            title={<Tooltip title="How long until the pool solves the next block, presuming 100% Effort." color="cyan"><span>TTF </span></Tooltip>}
+                                            title={<Tooltip title="The time it will take at your CURRENT SOLO HASHRATE a solve a block at 100% Effort. If you are Lucky you will solve faster. If you are Unlucky, it will take longer. See Mining Luck in the FAQ section." color="cyan"><span>SOLO TTF </span></Tooltip>}
                                             value={
                                                 getHoursMinutes((pool?.network?.hashrate / miner?.hashrate?.solo) * 60 || 0)
                                             }

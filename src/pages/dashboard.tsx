@@ -289,7 +289,7 @@ const DashboardPage: NextPage = () =>
                                     title={<Tooltip title="Why is my hashrate wrong?? This is real-time hashrate, (not average) which varies every few seconds. This is a limiation of current EVR pool software; if we were to plot the varying hashrate stats minute by minute you would see they average-out to the exact same number that your miner software displays. If you are in doubt, please rely on your MINER-side hashrate stats." color="cyan"><span>Hashrate </span></Tooltip>}
                                     value={hashRateFormat(miner.hashrate?.[current] || 0, 3, "H/s")}
                                     precision={2}
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
 
                                 />
                             </WithIcon>
@@ -309,7 +309,7 @@ const DashboardPage: NextPage = () =>
                                             workers.filter((i) => i?.hashrate?.shared > 0).length
                                     }
                                     precision={0}
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                 />
                             </WithIcon>
                         </Card>
@@ -325,7 +325,7 @@ const DashboardPage: NextPage = () =>
                                     title={<Tooltip title="Immature balance owed, waiting for block confirmations" color="cyan"><span>Pending Balance </span></Tooltip>}
                                     value={miner.payments?.immature || 0}
                                     precision={2}
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     suffix="EVR"
                                 />
                             </WithIcon>
@@ -342,7 +342,7 @@ const DashboardPage: NextPage = () =>
                                     title={<Tooltip title="Pool + SOLO" color="cyan"><span>Total Paid </span></Tooltip>}
                                     value={miner.payments?.paid || 0}
                                     precision={2}
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     suffix="EVR"
                                 />
                             </WithIcon>
@@ -362,7 +362,7 @@ const DashboardPage: NextPage = () =>
                                                 1 / (pool?.network?.hashrate || 0) * (miner?.hashrate?.[current] || 0) * (2500.20 * 86400 / 60)
                                             }
                                             precision={2}
-                                            valueStyle={{ color: '#3f8600' }}
+                                            valueStyle={{ color: '#FFFFFF' }}
                                             suffix="EVR"
                                         />
                                     </WithIcon>
@@ -406,7 +406,7 @@ const DashboardPage: NextPage = () =>
                                                 // getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
                                             }
                                             suffix="MINS"
-                                            valueStyle={{ color: '#3f8600' }}
+                                            valueStyle={{ color: '#FFFFFF' }}
                                         />
                                     </WithIcon>
 
@@ -424,7 +424,7 @@ const DashboardPage: NextPage = () =>
                                             value={
                                                 getHoursMinutes((pool?.network?.hashrate / miner?.hashrate?.solo) * 60 || 0)
                                             }
-                                            valueStyle={{ color: '#3f8600' }}
+                                            valueStyle={{ color: '#FFFFFF' }}
                                         />
                                     </WithIcon>
 

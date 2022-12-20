@@ -423,7 +423,7 @@ const HomePage = () =>
                                     value={
                                         hashRateFormat(statistic?.hashrate?.shared || 0, 3, 'H/s')
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                 />
                             </WithIcon>
                         </Card>
@@ -442,7 +442,7 @@ const HomePage = () =>
                                     value={
                                         getHoursMinutes((statistic?.network?.hashrate / statistic?.hashrate?.shared) * 60)
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                 />
                             </WithIcon>
 
@@ -461,7 +461,7 @@ const HomePage = () =>
                                     value={
                                         statistic?.shares?.valid
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                 />
                             </WithIcon>
                         </Card>
@@ -481,7 +481,7 @@ const HomePage = () =>
                                     value={
                                         statistic?.status?.effort
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     suffix="%"
                                 />
                             </WithIcon>
@@ -500,7 +500,7 @@ const HomePage = () =>
                                     value={
                                         hashRateFormat(statistic?.hashrate?.solo || 0, 3, 'H/s')
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                 />
                             </WithIcon>
                         </Card>
@@ -519,7 +519,7 @@ const HomePage = () =>
                                     value={
                                         (statistic?.config?.recipientFee || 0) * 100
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     suffix="%"
                                 />
                             </WithIcon>
@@ -539,7 +539,7 @@ const HomePage = () =>
                                     value={
                                         (statistic?.config?.minPayment || 0)
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     suffix="EVR"
                                 />
                             </WithIcon>
@@ -559,7 +559,7 @@ const HomePage = () =>
                                     value={
                                         (statistic?.config?.paymentInterval || 0) / 60
                                     }
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     suffix="MINS"
                                 />
                             </WithIcon>

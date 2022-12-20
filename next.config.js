@@ -14,7 +14,7 @@ module.exports = withPlugins(
                     "@layout-header-background": "#121212",
                     "@layout-header-height": "100px",
                     "@layout-header-padding": "0px",
-                    "@card-background": "#132E32",
+                    "@card-background": "#1E1E1E",
                 },
                 cssLoaderOptions: {},
             },

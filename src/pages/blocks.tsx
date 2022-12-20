@@ -240,7 +240,7 @@ const BlocksPage: NextPage = () =>
                                     title="Valid Blocks"
                                     value={blocks?.valid || 0}
                                     precision={0}
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                 // prefix={<ArrowUpOutlined />}
                                 />
                             </WithIcon>
@@ -256,7 +256,7 @@ const BlocksPage: NextPage = () =>
                                     title="Luck10"
                                     value={luck.luck10 || 0}
                                     precision={2}
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     // prefix={<ArrowUpOutlined />}
                                     suffix="%"
                                 />
@@ -273,7 +273,7 @@ const BlocksPage: NextPage = () =>
                                     title="Luck100"
                                     value={luck.luck100 || 0}
                                     precision={2}
-                                    valueStyle={{ color: '#3f8600' }}
+                                    valueStyle={{ color: '#FFFFFF' }}
                                     // prefix={<ArrowUpOutlined />}
                                     suffix="%"
                                 />

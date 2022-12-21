@@ -87,11 +87,13 @@ const HomePage = () =>
                 data: history.map((i) => i.hashrate.shared / 1000000000),
                 // color: '#9DC8F1',
                 color: '#53D8FF',
+                // color: '#ff908c',
             },
             {
                 name: 'Solo hashrate',
                 data: history.map((i) => i.hashrate.solo / 1000000000),
                 color: '#9DC8F1',
+                // color: '#a5d69c',
             }
         ]
 
